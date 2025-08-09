@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # PHP Application
+  app:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: storeall_app
+    volumes:
+      - ./src:/var/www/html
+      - ./public:/var/www/html/public
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - storeall_network
+
+  # Nginx Web Server
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    container_name: storeall_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./public:/var/www/html/public
+    depends_on:
+      - app
+    networks:
+      - storeall_network
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: storeall_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: storeall_dev
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: storeall_user
+      MYSQL_PASSWORD: storeall_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - storeall_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: storeall_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - storeall_network
+
+  # phpMyAdmin (Optional - for database management)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: storeall_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: storeall_user
+      PMA_PASSWORD: storeall_password
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - storeall_network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  storeall_network:
+    driver: bridge

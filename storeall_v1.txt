@@ -1,0 +1,527 @@
+﻿Store unit inventory.
+
+
+Logistics:
+
+
+* For this web project will be using folder with index.php with an .htaccess file to make sure the index.php file is the only file in each folder.  That way the folder web address is clean and we don’t show the web pages are .php
+* For any test or setup pages need to be clearly labled and at the root level.  The reason is in past we had these files in a folder with a .htaccess file and they would not run…got an 406 error.  To avoid this issue I want these files only at the root level.  Also, the label will make it easy to delete the files when needed.
+* All .md files need to be in one folder at the root level.  If .md files are everywhere then it is had to find them.
+* Any data base updates or changes for DLL need to be written in a single file, or at least all the DB DLL files need to be in one folder at the root level. This is so it is easy to recreate the data base if needed
+* Any javascript, css, or other files that are considered “include” need to go into the folder at the root level.  I do not want these files buried in subfolders in other parts of the folder architecture.
+* The web site should have the ability to trap errors on the client side and database side and placed these errors in the data base so that it is easy to track issues when they happen.  This should be the place where meta data is collected as much as possible. For example, if the error is on the client side then is should have the web page and line (if possible) where the error happened, and any other data.  For the data base error meta data should include the code page where the error took place and the line which it happened and any other data that would help track where the error happened.
+* The web site should track performance such as how fast a query is executed and on the client side how fast a page loads.  This is important to see if any performance issue exist and where.  It should include metadata of the query or client side area where this issue happens.
+* All web pages should be mobile ready based on the device access. So the template for anything should be compatible with the latest technology like boot strap.  Note, Google will assess if web app is mobile ready and it should pass this test
+* Note, that it encouraged to use modal technology if it makes is easier to use the functionality on the same web page.  For example, if I am doing inventory on my units I should stay on the same web page for this work and never be taked to a different web page.
+* Note for support the SU or SA should be able to impersonate an owner, customer, and subowerners to help trouble shoot issue that may come up
+
+
+Website
+Storeall.io
+
+
+Architecture:
+* Roles
+   * Admin - is the systemadmin (SA) of Storeall.io this role is the president/ceo of the storeall.io company
+      * Admin may assign superusers (SU) to help mange the software.
+   * Owner - is the owner of the store unit or units. It is assumes owners will have more than one storage unit in a different location
+      * Owner will need to be able to assign subowners to help mange the side
+   * Customer - is the person who the one who rents unites from the owner.
+* Tiers of service
+   * This is a full SaaS web site to help owners manage their storage units and there are the following service levels
+   * First, owners have a web site but have not way to manage their inventory since this takes software and the ability to use specific software for this purpose so this basic level of service will give Owners the ability to manage inventory on their web sites but mange it on storeall.io.  They will need way to plugin the content of the inventory to their web site such as an API, Iframe, JSON, JavaScript, Wordpress, etc
+
+
+Note this tier is for up to 100 units
+
+
+   * Second, owners may not have a web site or would like to upgrade their website to something more functional.  So storeall.io will provide web hosting service for basic web page services, such as contact us, about us, main front page, inventory, and other pages as needed
+
+
+Note this tier if for only single locations and can be up to 200 units
+
+
+   * Third, owner my want a full billing management and reservation system where customers can shop for units and reserve them using a credit card.  This would update (1) one with the inventory with a reserve button so that the owner can still use their web site but bring in the inventory with the reserve option.
+      * Customer when booking a unit will need to create a user account and will need to provide their credit card or using any option that STRIPE services will allow.  Stipe will be the service handling the bill processing.  
+      * Customer will have a dashboard giving them access to cancel a unit. Access to documents they signed, invoices, and other informations about their unit.
+Note, for this highest service tier the owner may or may not use Storeall.io web site for creating web pages as a service. 
+
+
+Note, this tier of service is for unlimited units and for multiple locations. 
+
+
+* Customer portal should give owners a way to provide customer fields that allow them to have extend the current set of data that would be available to all owners.  Also the portal should allow the customer to sign PDF documents so that there is a way for the customer to read and sign these documents then bring them to the owner.  
+   * The customers portal should show them the units they have rented along with the past and next bill amounts.  It should also have the invoices for each month
+* Inventory web page
+   * If possible a compay should be able to batch load their inventory using an excel or csv file so that they don’t have to data entry every unit at once
+      * If the customer has the tier 3 level then they should have the option to add a unit by unit location. I will need some help on the best way to upload the file especially when there are lookup parameters like location.  I am not sure how to make this work when the lookup parameter does not match the location values in the database that the owner has already provided
+      * Note an owner should be prevented from provided multiple location even when they have tier 1 or 2 (knowing that tier 3 is the one that activate multiple locations) so they should be able to list their multiple locations and provide unit information for each location, BUT this data can not become available to the customer unless the upgrade to tier 3.  The owner should be present with a warning so they know they need to upgrad to tier 3 so that they can make the other location live on their customer site.  NOTE, the owner must be required to select a primary location for their units if they exist at multiple site.  Note the first location they enter will be the primary site as default.  The owner can select another location as a default site but then remove the defaul location from the other location.  Only one default location can exist. The reason if they are tier 3 and down grade to a tier 2 or 1 then all there data will remain, but only the default location will be available to the customer.  This warning should be made available to the owner.
+* Log in 
+   * Could be a modal window but it allows users to use their login about to login.  Not there should be a link to allow them to recover their password.  When they recover their password a link should go to their email. The link will go to a resent password page for them to reset their password.  Note they can not use the same password they have had in the last five times. 
+   * Also I would like for a pin deliver to their email or text each time they login for MFA.  I would like to explore text options as this is a start up company and I don’t have a money for an enterprise solution.  So maybe we wait for MFA unti I have enough business to offer this.  
+   * Password should be strong 12 characters, with a symbol, upper case, lower case, number.  And users should be resented with a bar showing them green, yellow, and red strength.
+
+
+* Registration
+   * Owner and customer and event SU and SA need to register with the system.  Also data is collect during registration time.  First and Last Name, email and phone number and password and retype password is all that is needed.  The email must be confirmed before a registration is official which means an email is sent to a user and they must click the link to approve their registration.  However, even though their registration is not official this should not prevent them as a custoerm to reserve and pay for a unit and owner from getting access to their tier and starting services.  We do not want to delay them getting into the portal.  However when everever they login next and if the registration link has not been clicke in their email, then they need to present with a notice to approve their registration link in their email.  Also it would be best to send them a new email with this same link so that they are encouraged to click the link.  The warning message should say that they can find the email in their spam folder and check this location for the email.  The SA or SU should have access to give the user active rights regardless so that in the event the owner or customer contacts customer support the SA and SU can active their account.  It would suggest that there is an issue with the email or something else in the registration process.
+   * Registration should be a modal window and if the registration information is received then the user should be given a succes message.  Also there should be validation for the all the fields (they are required) and the phone number and email address should be validated too.  Note the person entering the information that if their passwords do not match or are not strong enough.  This should happen before or after the hidden button is selected. 
+* Tier one experience
+   * Lowest price tier how about starting at 15/month.  Tier one is where the owner can use only the inventory management section where this is no option for rent management or hosting their webpage.  In short the customer will come their inventory which is on their web site and they will use a plug into the inventory that will be on their web site either by JSON, javascript, iframe, or any other plug in that will allow easy user of a beautiful inventory listing of available unit either with the status of available or pending, which will allow a person to be placed on a wait list for a particular size of unit.  For example if a customer wanted a 5 x 10 and all the 5 x 10 units are taken then a customer can elect to be on a wait list.  The owner can have a setting option to automatically email the first person (x people) on the wait list when a unit of their size becomes available.  The owner must supply the email to the x people that lets them know either to contact them or to visit their website for the updated inventory.  If this setting is set then the person or persons will receive an email with instructions.  If they visit the inventory plugin on the owners own web site then the owner can elect to just show the inventory and status or they can have a button a customer can click that will hold the unit for up to x amount of hours.  This is a great option for the owner a it give them the ability to connect with interested parties.  The owner needs a setting to enable this option as not all owners are going to want customers to hold units without a credit card or other currency, which will not be an option for this tier. Finally the owner may elect to only post available units and may not wish to have the wait list option.  In this case as soon as a unit is sold then the unit will not show on the inventory management web site for their plug in.
+Owners of this Tier must have the ability to send customers email so that they can select a user in their user list.  The email can be sent with a simple subject and body.  The email should be stored so that the owner can reference it later.  Note the issue I have this email idea is if it is important then how does the owner know it was received by the customer.  That is my biggest issue.  Also I know that email engines my see this a spam since the email is coming from the storeall.io web site but the email address will be something different.  In short it could be flagged as spam.  I might need help with this and decide to put this in as a feature.
+Owners should have a dashboard that gives them access to a UI that provide KPI on units rented and pending approvals.  Also we new to show them the tier they are on, so if they are on this tier it would show tier one
+      * Optional parameters
+         * Email x number of customers who are on the wait list that a unit of their size option is available.
+            * Owner must have the way to provide a message for the email to let users know
+
+
+* Tier two experience
+   * Should be for those owners that may or may not have a website, but this tier would give them an option to use storeall to provide a basic web page.  The owner should be able to upload photos where needed provide a description of their facility and other information.  I think it would be best ot have a few web sites we can reference so that we can see these what might work best for an owner.  Of course a owner might select this tier since they have over 100 unites in their inventory and the tier one experience is beyond what they need.  The customer if this tier should get all the benefit of the tier on experience plus these the web page tier.  What is nice about this approach is regardless they will have the inventory data to would populate this web page just like it would poplate their own web page.  If possible it would be nice to have basic data on the website for use metrics about say the number of visitors per month, which pages are views (view clicks) etc.
+* Tier three experience
+   * Tier three is the ultimate experience where i combines all the features and function of one and two and adds the billing and payment components.  I plan on using strip connect to give owners the ability to provide their own account infomratoin to stripe so that they received payment.  Owens will pay storeall their the storeall stripe account.  For this tier it is important to have billing on the dashboard in terms of the information about their rentals as KPI then they should have the option to see detail about the storage until rentals by any date range.  
+* Folder arrangements
+   * Note the {ower name] is the folder name the owner company
+      * For example, if the owner is named “johns storage unit”, then the {ower file name} would be https://www.storeall.io/johnsstorageunit/cust/ or https://www.storeall.io/johnsstorageunit/manage/
+         * Or, I would like advise on whether we go with a subdomain option
+      * System folder is where the core technolgy is managemed for services like web page management (tier 1), inventory management (tier 2) and billing (Tier 3).  Once again, please note a owner may elect not to have a web page manage by storeall.io rather all they want is the inventory managements and billing and processing with is a tier 3 level.
+   * Root
+      * Includes
+         * JS
+         * CSS
+      * Admin
+         * Dashboard
+            * User Management
+            * Account Managment
+      * {owner file name}
+         * Cust
+            * Dashboard
+            * Invoices
+         * Mange
+            * Dashboard
+      * System
+         * Billing
+            * So aside from having the three tier.  Owners can sign up for a free 14 day trial of services.  The 14 days does need to be the default, but the SA and SU need to have the option to adjust this number on a owner by owner basis.  For example if the Owner needs more time to evaluate, then the owner dashboard should have the option to have a list of the owners, select an owner, then increase the trial time.  Also the owner dashboard should show the owner time of registration, billing status, and other information.
+            * Billing will be through Stipe, I need to know if other ways of payment should be used, but I like Stripe for the fact is can accept payment in multiple ways.  So for billing I need to set this up for the owner so that they have the free trial but then have a seamless way to go to pay status of either tier 1,2,or 3.  Also the owner can go between this tiers at anytime, so say if a ower want to go from tier 1 to tier 3 due to they have now multiple sites then they should be able to switch without an issue.  If they switch within a month they the about for the new tier is prorated based on what they paid already for that month.  Say they paid for tier 1 on 1/1/2205 for 15 dollars a month and then they want to switch to tier 3 on 1/15/2025 99/month then the new charge would be half 15 dollars (7.50) and half of 99 dollars (49.50) for a total of 57 dollars.  The billing should be able to provide owner the confirmation was successful or not and this should be added to a log file so that this transaction can be view on the SA/SU dashboard. If there is an error with the transaction they the SA/SU should be notified via email so they can contact the owner.  Billing should also let the owner know on their dashboard a prominent banner letting them know they are in teh trial period and how many days they have left.  When the ower goes with the paid version then this banner will go away.  It should be always displayed on the owner’s dashboard which tier they are current on.  If possible I would like all billing to be billed at the start of the month to make it easy. For example if an owern registers for a tier one service on 1/15/2025 and the service cost 15 dollars per month then from 1/15/2025 - 1/31/2025 the are bill one transaction at 7.50.  Then on 2/1/2025 the are billed for the full month.  It should be in the policy document that the owner can canel at any time during the billing period but no refunds can be made after the month’s transaction as ended.  For example say an ower is using the tier 2 service and it is 3/21/2025 and they cancel their service.  They will still have access to their service until 3/31/2025, that after which the service will be turned off.  Please note that none of the owners data will go away.  So if an owner decides to return to storeall.io and they provide the same email address then they could return back to their site without any loss of information.  However, any data related to customer that have rented sites from them will be automatically deleted after 90 days of no payment.  PLEASE add this to the policy document the owner must read an accept.  In reality the customer data will not be physically deleted from the web site, but the software must have a way to inactivate the customers from the owner’s view. I would suggest there is an access indicator (1 or 0) that turns off the customer from the owners view if they return to their account after 90 days.  This is very important, since an owner may make the case they access to their customers data an make a good business argument.  Then it will be important the for the SU/SA to be given the option to turns on the customers access for the owner view.  This will also helpful if an owner is out of town and their credit card expires.  I want to have enough time that will allow them to pay their backpayments without shutting down their service.  A banner should to on the owner dashboard letting them know they own money, the dashboard should show this amount in the billing area of the dashboard and there should be a easy link or something where the owner can update the credit card or take care of paying the fee.  Also the owner should be provided an email letting them know about the is and the email should reference the policy document that their account will be deactivated in x days.  Finall the SU/SA should be notified too about this issue via email.  As far as the email to SU/SA.  It would be great to have one morning email for all things storeall.io.  This would inludue a report of new owners and customers, money from the previous day.  An update on erors and performance from the log files.  Also any other note worry information.
+         * Inventory
+
+
+
+
+# StoreAll.io - Complete Architecture Specification
+## Storage Unit Management SaaS Platform
+
+
+---
+
+
+
+
+## System Overview
+
+
+### Business Model
+- **Tier 1**: Inventory Management ($29/month) - Core inventory tracking
+- **Tier 2**: Web Hosting ($49/month) - Custom websites + inventory
+- **Tier 3**: Full Billing/Reservation ($99/month) - Complete business solution
+
+
+### Core Functionality
+- Multi-tenant SaaS platform
+- Role-based access control (Admin, Super User, Owner, Customer)
+- Real-time inventory management
+- Customer portal with document signing
+- Automated billing and subscription management
+- Waitlist and reservation system
+- Email automation and notifications
+
+
+---
+
+
+## Technical Stack
+
+
+### Backend
+- **Language**: PHP 8.1+
+- **Database**: MySQL 8.0+ with InnoDB engine
+- **Caching**: Redis for session storage and caching
+
+
+
+
+### Frontend
+- **Framework**: Bootstrap 5.3+ for responsive design
+- **JavaScript**: Vanilla JS + jQuery for interactions
+- **CSS**: Custom CSS with Bootstrap customization
+- **Icons**: Font Awesome 6.0+
+
+
+### Third-Party Integrations
+- **Payment Processing**: Stripe (Payments, Subscriptions, Connect)
+- **SSL**: Let's Encrypt certificates
+
+
+### Development Tools
+- **Version Control**: Git with GitHub
+- **Composer**: PHP dependency management
+- **Environment**: Docker for development consistency
+
+
+
+
+
+
+---
+
+
+## Application Architecture
+
+
+### Directory Structure
+```
+storageunit/
+├── config/                     # Configuration files
+│   ├── database.php           # Database configuration
+│   ├── app.php               # Application settings
+│   ├── stripe.php            # Stripe API configuration
+│   └── email.php             # Email service configuration
+├── includes/                  # Core application files
+│   ├── Database.php          # Database connection and queries
+│   ├── Auth.php              # Authentication and authorization
+│   ├── Session.php           # Session management
+│   ├── Logger.php            # Logging functionality
+│   ├── Email.php             # Email sending
+│   ├── Stripe.php            # Stripe integration
+│   ├── Validation.php        # Input validation
+│   └── Security.php          # Security utilities
+├── public/                    # Web-accessible files
+│   ├── index.php             # Main entry point
+│   ├── admin/                # Admin panel
+│   ├── api/                  # API endpoints
+│   ├── billing/              # Billing pages
+│   ├── customers/            # Customer portal
+│   ├── css/                  # Stylesheets
+│   ├── js/                   # JavaScript files
+│   └── images/               # Images and assets
+├── subdomains/               # Subdomain handling
+│   ├── index.php             # Subdomain router
+│   └── templates/            # Subdomain templates
+├── webhooks/                 # Webhook handlers
+│   └── stripe.php            # Stripe webhook processing
+├── cron/                     # Scheduled tasks
+│   ├── billing.php           # Billing automation
+│   ├── notifications.php     # Email notifications
+│   └── cleanup.php           # Data cleanup
+├── vendor/                   # Composer dependencies
+├── logs/                     # Application logs
+├── uploads/                  # File uploads
+├── .htaccess                 # URL rewriting rules
+├── composer.json             # PHP dependencies
+└── README.md                 # Project documentation
+```
+
+
+### Core Classes
+
+
+#### Database Class
+```php
+class Database {
+    private static $instance = null;
+    private $connection;
+    
+    public static function getInstance();
+    public function query($sql, $params = []);
+    public function insert($table, $data);
+    public function update($table, $data, $where);
+    public function delete($table, $where);
+    public function beginTransaction();
+    public function commit();
+    public function rollback();
+}
+```
+
+
+#### Authentication Class
+```php
+class Auth {
+    public static function login($email, $password);
+    public static function logout();
+    public static function register($userData);
+    public static function verifyEmail($token);
+    public static function resetPassword($email);
+    public static function changePassword($userId, $oldPassword, $newPassword);
+    public static function enableMFA($userId);
+    public static function verifyMFA($userId, $code);
+    public static function isLoggedIn();
+    public static function getCurrentUser();
+    public static function hasRole($role);
+    public static function hasPermission($permission);
+}
+```
+
+
+#### Session Management
+```php
+class Session {
+    public static function start();
+    public static function set($key, $value);
+    public static function get($key, $default = null);
+    public static function delete($key);
+    public static function destroy();
+    public static function regenerate();
+    public static function isSecure();
+}
+```
+
+
+---
+
+
+## Security Architecture
+
+
+### Authentication & Authorization
+- **Password Requirements**: Minimum 12 characters, uppercase, lowercase, numbers, symbols
+- **MFA Support**: TOTP-based two-factor authentication
+- **Session Management**: Secure session handling with automatic timeout
+- **Rate Limiting**: Login attempt throttling
+- **Account Lockout**: Temporary lockout after failed attempts
+
+
+### Data Protection
+- **Encryption**: All sensitive data encrypted at rest
+- **HTTPS**: TLS 1.3 for all communications
+- **Input Validation**: Comprehensive input sanitization
+- **SQL Injection Prevention**: Prepared statements only
+- **XSS Protection**: Output encoding and CSP headers
+
+
+### Privacy & Compliance
+- **GDPR Compliance**: Data portability and deletion rights
+- **Data Retention**: Configurable retention policies
+- **Audit Trails**: Complete action logging
+- **Access Controls**: Role-based permissions
+
+
+---
+
+
+## API Architecture
+
+
+### RESTful API Design
+```
+Base URL: https://api.storeall.io/v1
+
+
+Authentication: Bearer Token (JWT)
+
+
+Endpoints:
+GET    /organizations/{id}/units          # List units
+POST   /organizations/{id}/units          # Create unit
+GET    /organizations/{id}/units/{unitId} # Get unit details
+PUT    /organizations/{id}/units/{unitId} # Update unit
+DELETE /organizations/{id}/units/{unitId} # Delete unit
+
+
+GET    /organizations/{id}/reservations   # List reservations
+POST   /organizations/{id}/reservations   # Create reservation
+GET    /organizations/{id}/waitlist       # List waitlist
+POST   /organizations/{id}/waitlist       # Join waitlist
+
+
+GET    /users/profile                     # Get user profile
+PUT    /users/profile                     # Update profile
+GET    /users/payment-methods             # List payment methods
+POST   /users/payment-methods             # Add payment method
+```
+
+
+### API Response Format
+```json
+{
+  "success": true,
+  "data": {
+    // Response data
+  },
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "per_page": 20,
+      "total": 100
+    }
+  },
+  "errors": null
+}
+```
+
+
+### Error Handling
+```json
+{
+  "success": false,
+  "data": null,
+  "errors": [
+    {
+      "field": "email",
+      "message": "Email is required",
+      "code": "VALIDATION_ERROR"
+    }
+  ]
+}
+```
+
+
+---
+
+
+## Deployment Architecture
+
+
+### Production Environment
+- **Web Server**: Nginx with PHP-FPM
+- **Database**: MySQL 8.0 with read replicas
+- **Caching**: Redis cluster
+- **CDN**: Cloudflare for static assets
+- **SSL**: Let's Encrypt certificates
+- **Monitoring**: Application performance monitoring
+
+
+### Scalability Strategy
+- **Horizontal Scaling**: Load balancers for web servers
+- **Database Scaling**: Read replicas and connection pooling
+- **Caching Strategy**: Multi-layer caching (Redis, CDN)
+- **Queue Processing**: Background job processing
+
+
+### Backup Strategy
+- **Database**: Daily automated backups with point-in-time recovery
+- **Files**: Automated file system backups
+- **Configuration**: Version-controlled configuration management
+- **Disaster Recovery**: Multi-region backup strategy
+
+
+---
+
+
+## Performance & Scalability
+
+
+### Performance Targets
+- **Page Load Time**: < 2 seconds for 95% of requests
+- **API Response Time**: < 500ms for 95% of requests
+- **Database Query Time**: < 100ms for 95% of queries
+- **Uptime**: 99.9% availability
+
+
+### Optimization Strategies
+- **Database Indexing**: Comprehensive index strategy
+- **Query Optimization**: Efficient SQL queries with proper joins
+- **Caching**: Redis caching for frequently accessed data
+- **CDN**: Static asset delivery optimization
+- **Code Optimization**: Efficient PHP code with opcache
+
+
+### Monitoring & Alerts
+- **Application Monitoring**: Real-time performance tracking
+- **Error Tracking**: Comprehensive error logging and alerting
+- **Uptime Monitoring**: Service availability monitoring
+- **Performance Metrics**: Key performance indicators tracking
+
+
+---
+
+
+## Development Workflow
+
+
+### Version Control
+- **Branch Strategy**: Git flow with feature branches
+- **Code Review**: Mandatory pull request reviews
+- **Testing**: Automated testing for all changes
+- **Deployment**: Automated deployment pipeline
+
+
+### Development Environment
+- **Local Setup**: Docker-based development environment
+- **Database**: Local MySQL instance with sample data
+- **Testing**: PHPUnit for unit and integration tests
+- **Code Quality**: PHPStan and PHP CS Fixer
+
+
+### Deployment Process
+1. **Development**: Feature development in feature branches
+2. **Testing**: Automated testing and code review
+3. **Staging**: Deployment to staging environment
+4. **Production**: Automated deployment to production
+5. **Monitoring**: Post-deployment monitoring and validation
+
+
+---
+
+
+## Implementation Phases
+
+
+### Phase 1: Core Foundation (Weeks 1-4)
+- Database schema implementation
+- User authentication system
+- Basic organization management
+- Core inventory functionality
+
+
+### Phase 2: Customer Features (Weeks 5-8)
+- Customer portal
+- Reservation system
+- Waitlist functionality
+- Basic billing integration
+
+
+### Phase 3: Advanced Features (Weeks 9-12)
+- Stripe Connect integration
+- Advanced billing features
+- Email automation
+- API development
+
+
+### Phase 4: Polish & Launch (Weeks 13-16)
+- Performance optimization
+- Security hardening
+- Testing and bug fixes
+- Production deployment
+
+
+---
+
+
+Technical Recommendations
+API Design: For the inventory plugins, consider:
+* RESTful API with proper authentication
+* Rate limiting to prevent abuse
+* Caching strategies for inventory data
+* Webhook support for real-time updates
+Security Considerations:
+* Input validation and sanitization
+* CSRF protection
+* SQL injection prevention
+* XSS protection
+* Secure session management
+Performance Monitoring: Your error tracking and performance monitoring requirements are excellent. Consider implementing:
+* Application Performance Monitoring (APM)
+* Database query optimization
+* Frontend performance metrics
+* User experience tracking
+* Questions for Clarification
+Subdomain vs. Folder Structure: Have you decided between subdomains (johnsstorageunit.storeall.io) vs. folder structure (storeall.io/johnsstorageunit)? I need to know the differences between the two versus effort but I am thinking of going with storeall.io/johnsstorageunit)
+
+
+Payment Processing: Will you handle customer payments directly or just owner subscriptions through Stripe?
+Each owner for the tier three level will have the abiling to have a full payment process for their customer. I am open to options, but i would like to use Stripe Connect so that it makes it easy for business owners to sign up with storeall and provide an experience where there customers can rent, cancel, get probation on their unit and all that from a customers perspective
+
+
+Data Export: Should owners be able to export their inventory/customer data?  Exporting will be a feature we will offer owners so that they can use this for other purposes they should have the ability to down load a csv or excel spread sheet.
+
+
+Backup Strategy: What's your plan for data backup and disaster recovery?
+This is a well-thought-out project with clear business value. The modular approach will allow for iterative development and testing. Would you like me to help you start implementing any specific part of this system?  I need a plan.  I am using a hosting solution that provide cpanel for management and I know they have backup functionality.  Before I have do my development in a test environment and I would use a linux command that would update only the change information to production.
