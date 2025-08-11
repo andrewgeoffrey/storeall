@@ -1,0 +1,11 @@
+# Prevent direct access to PHP files in includes folder
+<Files "*.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Allow access to CSS, JS, and image files
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|ico)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
