@@ -156,3 +156,4 @@ storeall/
 5. Begin development with the established structure
 
 This structure follows all the logistics requirements and provides a solid foundation for the StoreAll.io platform.
+
