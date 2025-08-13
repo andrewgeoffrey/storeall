@@ -10,16 +10,22 @@
 // Start session
 session_start();
 
+// Define the base path
+$basePath = __DIR__;
+
 // Load configuration
-require_once 'config/config.php';
+require_once $basePath . '/config/config.php';
 
 // Load core classes
-require_once 'includes/Database.php';
-require_once 'includes/Auth.php';
-require_once 'includes/Session.php';
-require_once 'includes/Logger.php';
-require_once 'includes/ErrorHandler.php';
-require_once 'includes/PerformanceMonitor.php';
+require_once $basePath . '/includes/Database.php';
+require_once $basePath . '/includes/Auth.php';
+require_once $basePath . '/includes/Session.php';
+require_once $basePath . '/includes/Logger.php';
+require_once $basePath . '/includes/ErrorHandler.php';
+require_once $basePath . '/includes/PerformanceMonitor.php';
+
+// Load helper functions
+require_once $basePath . '/includes/helpers.php';
 
 // Initialize error handling and performance monitoring
 ErrorHandler::init();

@@ -157,3 +157,4 @@ storeall/
 
 This structure follows all the logistics requirements and provides a solid foundation for the StoreAll.io platform.
 
+
