@@ -12,7 +12,7 @@ session_start();
 
 // Define the base path
 $basePath = __DIR__;
-
+echo $basePath;
 // Load configuration
 require_once $basePath . '/config/config.php';
 
