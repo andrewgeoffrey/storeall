@@ -1,54 +1,46 @@
 <?php
+// Session configuration - MUST be the very first thing, before any output
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.cookie_secure', 0);
+    ini_set('session.use_strict_mode', 1);
+    ini_set('session.cookie_samesite', 'Lax');
+    session_name('storeall_session');
+    session_start();
+}
+
 /**
  * StoreAll Configuration File
  * Main configuration settings for the application
  */
 
 // Environment setting
-define('ENVIRONMENT', 'production'); // Change to 'production' for live site
+define('ENVIRONMENT', 'development');
 
-// Database configuration
-define('DB_HOST', 'localhost'); // Your database host
-define('DB_NAME', 'n300265_storeall'); // Your database name
-define('DB_USER', 'n300265_jdodds_storeall'); // Your database username
-define('DB_PASS', '33A3E8D0A6838F95ABB848F682F6BF49BF5BA5D85478A31451D9F73435498EB4'); // Your database password
+// Database configuration for Docker
+define('DB_HOST', 'mysql');
+define('DB_NAME', 'storeall_dev');
+define('DB_USER', 'storeall_user');
+define('DB_PASS', 'storeall_password');
 define('DB_CHARSET', 'utf8mb4');
 
 // Application settings
-define('APP_NAME', 'StoreAll');
-define('APP_URL', 'http://storeall.andrewgeoffrey.net');
+define('APP_NAME', 'StoreAll.io');
+define('APP_URL', 'http://localhost:8080');
 define('APP_VERSION', '1.0.0');
 
 // Security settings
 define('SESSION_NAME', 'storeall_session');
-define('SESSION_LIFETIME', 3600); // 1 hour
-define('PASSWORD_COST', 12); // bcrypt cost
+define('SESSION_LIFETIME', 3600);
+define('PASSWORD_COST', 12);
 
 // Error reporting
-if (ENVIRONMENT === 'development') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-} else {
-    error_reporting(0);
-    ini_set('display_errors', 0);
-    ini_set('display_startup_errors', 0);
-}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 // Timezone
 date_default_timezone_set('UTC');
-
-// Session configuration
-ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 0); // Set to 1 in production with HTTPS
-ini_set('session.use_strict_mode', 1);
-ini_set('session.cookie_samesite', 'Lax');
-
-// Start session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_name(SESSION_NAME);
-    session_start();
-}
 
 // Helper functions
 function isProduction() {
@@ -66,10 +58,6 @@ function getAppUrl($path = '') {
 function redirect($path) {
     header('Location: ' . getAppUrl($path));
     exit;
-}
-
-function asset($path) {
-    return getAppUrl('includes/' . ltrim($path, '/'));
 }
 
 // CSRF protection

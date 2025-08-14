@@ -1,57 +1,65 @@
 <?php
 /**
- * ErrorHandler Class
- * Handles error logging and tracking for both client-side and server-side errors
+ * ErrorHandler.php - Error Handling Class
+ * Handles application errors and exceptions
  */
 
 class ErrorHandler {
     private static $instance = null;
-    private $db;
+    private $logFile;
     
-    public static function init() {
+    private function __construct() {
+        $this->logFile = 'logs/errors.log';
+        
+        // Ensure log directory exists
+        $logDir = dirname($this->logFile);
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0755, true);
+        }
+    }
+    
+    public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
         }
-        
-        // Set error handlers
-        set_error_handler([self::$instance, 'handleError']);
-        set_exception_handler([self::$instance, 'handleException']);
-        register_shutdown_function([self::$instance, 'handleFatalError']);
-        
         return self::$instance;
     }
     
-    private function __construct() {
-        $this->db = Database::getInstance();
+    /**
+     * Initialize error handling
+     */
+    public static function init() {
+        // Set error handlers
+        set_error_handler([self::getInstance(), 'handleError']);
+        set_exception_handler([self::getInstance(), 'handleException']);
+        register_shutdown_function([self::getInstance(), 'handleFatalError']);
     }
     
     /**
      * Handle PHP errors
      */
     public function handleError($errno, $errstr, $errfile, $errline) {
+        if (!(error_reporting() & $errno)) {
+            return false; // Don't handle suppressed errors
+        }
+        
         $errorData = [
             'type' => 'PHP_ERROR',
+            'level' => $errno,
             'message' => $errstr,
             'file' => $errfile,
             'line' => $errline,
-            'error_level' => $errno,
             'url' => $_SERVER['REQUEST_URI'] ?? '',
             'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
             'ip_address' => $_SERVER['REMOTE_ADDR'] ?? '',
             'user_id' => $_SESSION['user_id'] ?? null,
             'session_id' => session_id(),
-            'timestamp' => date('Y-m-d H:i:s'),
-            'stack_trace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10)
+            'timestamp' => date('Y-m-d H:i:s')
         ];
         
         $this->logError($errorData);
         
-        // Don't display errors in production
-        if (defined('ENVIRONMENT') && ENVIRONMENT === 'production') {
-            return true;
-        }
-        
-        return false;
+        return true;
     }
     
     /**
@@ -100,37 +108,25 @@ class ErrorHandler {
     }
     
     /**
-     * Log error to database
+     * Log error to file (simplified to prevent memory issues)
      */
     private function logError($errorData) {
         try {
-            $sql = "INSERT INTO error_logs (
-                error_type, message, file_path, line_number, url, 
-                user_agent, ip_address, user_id, session_id, 
-                timestamp, stack_trace, metadata
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-            $params = [
+            $logEntry = sprintf(
+                "[%s] %s: %s in %s on line %d\n",
+                $errorData['timestamp'],
                 $errorData['type'],
                 $errorData['message'],
                 $errorData['file'],
-                $errorData['line'],
-                $errorData['url'],
-                $errorData['user_agent'],
-                $errorData['ip_address'],
-                $errorData['user_id'],
-                $errorData['session_id'],
-                $errorData['timestamp'],
-                $errorData['stack_trace'],
-                json_encode($errorData)
-            ];
+                $errorData['line']
+            );
             
-            $this->db->query($sql, $params);
+            file_put_contents($this->logFile, $logEntry, FILE_APPEND | LOCK_EX);
             
         } catch (Exception $e) {
-            // Fallback to file logging if database fails
-            error_log("ErrorHandler failed to log to database: " . $e->getMessage());
-            error_log("Original error: " . json_encode($errorData));
+            // Fallback to PHP's built-in error logging
+            error_log("ErrorHandler failed to log to file: " . $e->getMessage());
+            error_log("Original error: " . $errorData['message']);
         }
     }
     
@@ -152,21 +148,10 @@ class ErrorHandler {
             'user_id' => $_SESSION['user_id'] ?? null,
             'session_id' => session_id(),
             'timestamp' => date('Y-m-d H:i:s'),
-            'stack_trace' => $errorData['stack'] ?? '',
-            'metadata' => json_encode($errorData)
+            'stack_trace' => $errorData['stack'] ?? ''
         ];
         
         $instance->logError($data);
-    }
-    
-    /**
-     * Get singleton instance
-     */
-    public static function getInstance() {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 }
 ?>

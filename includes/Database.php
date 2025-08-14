@@ -1,4 +1,3 @@
-<!-- includes/Database.php (update the existing file) -->
 <?php
 /**
  * Database Class
@@ -10,7 +9,6 @@ class Database {
     private $connection;
     private $lastQuery;
     private $queryCount = 0;
-    private $queryLog = [];
 
     private function __construct() {
         try {
@@ -21,9 +19,6 @@ class Database {
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
         } catch (PDOException $e) {
-            if (class_exists('ErrorHandler')) {
-                ErrorHandler::getInstance()->handleException($e);
-            }
             throw new Exception("Database connection failed: " . $e->getMessage());
         }
     }
@@ -40,37 +35,15 @@ class Database {
     }
 
     public function query($sql, $params = []) {
-        $startTime = microtime(true);
-        $queryId = uniqid();
-
         try {
-            if (class_exists('PerformanceMonitor')) {
-                PerformanceMonitor::startQuery($sql, $params);
-            }
-
             $stmt = $this->connection->prepare($sql);
             $stmt->execute($params);
 
             $this->lastQuery = $sql;
             $this->queryCount++;
-            $this->queryLog[] = [
-                'sql' => $sql,
-                'params' => $params,
-                'time' => microtime(true) - $startTime
-            ];
-
-            if (class_exists('PerformanceMonitor')) {
-                PerformanceMonitor::endQuery($queryId);
-            }
 
             return $stmt;
         } catch (PDOException $e) {
-            if (class_exists('PerformanceMonitor')) {
-                PerformanceMonitor::endQuery($queryId);
-            }
-            if (class_exists('ErrorHandler')) {
-                ErrorHandler::getInstance()->handleException($e);
-            }
             throw new Exception("Query failed: " . $e->getMessage());
         }
     }
@@ -138,10 +111,6 @@ class Database {
 
     public function getQueryCount() {
         return $this->queryCount;
-    }
-
-    public function getQueryLog() {
-        return $this->queryLog;
     }
 
     public function tableExists($tableName) {
