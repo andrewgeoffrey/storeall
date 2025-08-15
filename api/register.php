@@ -9,6 +9,7 @@ require_once __DIR__ . '/../includes/Auth.php';
 require_once __DIR__ . '/../includes/Session.php';
 require_once __DIR__ . '/../includes/Logger.php';
 require_once __DIR__ . '/../includes/ErrorHandler.php';
+require_once __DIR__ . '/../includes/Email.php';
 require_once __DIR__ . '/../includes/helpers.php';
 
 // Set content type to JSON for API responses
@@ -218,8 +219,10 @@ try {
         // Commit transaction
         $db->commit();
 
-        // Send welcome email (placeholder - you'll need to implement email service)
-        // sendWelcomeEmail($email, $firstName, $verificationToken);
+        // Send welcome email
+        if (class_exists('Email')) {
+            Email::getInstance()->sendWelcomeEmail($email, $firstName, $verificationToken);
+        }
 
         // Return success response
         echo json_encode([
@@ -289,33 +292,5 @@ function createSubdomain($companyName) {
     return $subdomain;
 }
 
-/**
- * Send welcome email (placeholder function)
- */
-function sendWelcomeEmail($email, $firstName, $verificationToken) {
-    // This is a placeholder - you'll need to implement actual email sending
-    // You can use PHPMailer, SwiftMailer, or a service like SendGrid
-    
-    $subject = 'Welcome to StoreAll.io - Confirm Your Account';
-    $verificationUrl = APP_URL . '/pages/verify-email.php?token=' . $verificationToken;
-    
-    $message = "
-    <html>
-    <body>
-        <h2>Welcome to StoreAll.io, {$firstName}!</h2>
-        <p>Thank you for registering with StoreAll.io. To complete your registration, please click the link below to verify your email address:</p>
-        <p><a href='{$verificationUrl}'>Verify Email Address</a></p>
-        <p>If the link doesn't work, copy and paste this URL into your browser:</p>
-        <p>{$verificationUrl}</p>
-        <p>This link will expire in 24 hours.</p>
-        <p>If you didn't create this account, you can safely ignore this email.</p>
-        <br>
-        <p>Best regards,<br>The StoreAll.io Team</p>
-    </body>
-    </html>
-    ";
-    
-    // TODO: Implement actual email sending
-    // mail($email, $subject, $message, "From: noreply@storeall.io\r\nContent-Type: text/html; charset=UTF-8\r\n");
-}
+
 ?>

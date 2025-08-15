@@ -343,120 +343,6 @@
             transition: width 0.3s ease, background-color 0.3s ease;
         }
 
-        /* Validation Styles */
-        .form-control.is-invalid {
-            border-color: var(--danger-color);
-            box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25);
-        }
-
-        .form-check-input.is-invalid {
-            border-color: var(--danger-color);
-        }
-
-        .invalid-feedback {
-            display: block;
-            color: var(--danger-color);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-
-        .form-label.required::after {
-            content: " *";
-            color: var(--danger-color);
-            font-weight: bold;
-        }
-
-        /* Make required field labels red when validation fails */
-        .form-control.is-invalid + .form-label.required,
-        .form-check-input.is-invalid ~ .form-check-label.required {
-            color: var(--danger-color);
-            font-weight: bold;
-        }
-
-        /* Highlight required field labels in red when form has errors */
-        .form-control.is-invalid ~ .form-label.required,
-        .form-control.is-invalid + .form-label.required {
-            color: var(--danger-color) !important;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .form-control.is-invalid {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        .form-text {
-            font-size: 0.875rem;
-            color: #6c757d;
-            margin-top: 0.25rem;
-        }
-
-        .form-control.is-valid {
-            border-color: var(--success-color);
-            background-color: rgba(16, 185, 129, 0.1);
-        }
-
-        /* Validation Styles */
-        .form-control.is-invalid {
-            border-color: var(--danger-color);
-            box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25);
-        }
-
-        .form-check-input.is-invalid {
-            border-color: var(--danger-color);
-        }
-
-        .invalid-feedback {
-            display: block;
-            color: var(--danger-color);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-
-        .form-label.required::after {
-            content: " *";
-            color: var(--danger-color);
-            font-weight: bold;
-        }
-
-        /* Make required field labels red when validation fails */
-        .form-control.is-invalid + .form-label.required,
-        .form-check-input.is-invalid ~ .form-check-label.required {
-            color: var(--danger-color);
-            font-weight: bold;
-        }
-
-        /* Highlight required field labels in red when form has errors */
-        .form-control.is-invalid ~ .form-label.required,
-        .form-control.is-invalid + .form-label.required {
-            color: var(--danger-color) !important;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .form-control.is-invalid {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        .form-text {
-            font-size: 0.875rem;
-            color: #6c757d;
-            margin-top: 0.25rem;
-        }
-
-        .form-control.is-valid {
-            border-color: var(--success-color);
-            background-color: rgba(16, 185, 129, 0.1);
-        }
-
         /* Enhanced Validation Styles */
         .form-control.is-invalid {
             border-color: #dc3545 !important;
@@ -556,27 +442,6 @@
             color: #6c757d;
             font-size: 0.875rem;
             margin-top: 0.25rem;
-        }
-        
-        /* Password strength indicator colors */
-        .progress-bar.very-weak {
-            background-color: #dc3545;
-        }
-        
-        .progress-bar.weak {
-            background-color: #fd7e14;
-        }
-        
-        .progress-bar.medium {
-            background-color: #ffc107;
-        }
-        
-        .progress-bar.strong {
-            background-color: #28a745;
-        }
-        
-        .progress-bar.very-strong {
-            background-color: #20c997;
         }
 
         /* Success state for valid fields */
@@ -889,7 +754,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="errorSummary" class="alert alert-danger mb-3" style="display: none;"></div>
                     <form id="registrationForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -942,13 +806,13 @@
                         <div class="mb-3">
                             <label for="password" class="form-label required">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
-                            <div class="progress mt-2" style="height: 8px;">
-                                <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            <div class="password-strength mt-2">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" id="passwordStrengthBar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <small class="text-muted mt-1" id="passwordStrengthText">Password strength: Very Weak</small>
                             </div>
-                            <div class="form-text" id="passwordStrengthText">Password strength: Very Weak</div>
-                            <div class="form-text" id="passwordRequirements">
-                                <small>Requirements: 12+ characters, uppercase, lowercase, number, symbol</small>
-                            </div>
+                            <div class="form-text">Minimum 12 characters with uppercase, lowercase, number, and symbol</div>
                             <div class="invalid-feedback" id="passwordError"></div>
                         </div>
                         
@@ -1376,120 +1240,12 @@
             }
         }
         
-        // Password strength functions
-        function checkPasswordStrength(password) {
-            let score = 0;
-            let requirements = [];
-            
-            // Length check
-            if (password.length >= 12) {
-                score += 2;
-            } else {
-                requirements.push('12+ characters');
-            }
-            
-            // Character type checks
-            if (/[A-Z]/.test(password)) {
-                score += 1;
-            } else {
-                requirements.push('uppercase letter');
-            }
-            
-            if (/[a-z]/.test(password)) {
-                score += 1;
-            } else {
-                requirements.push('lowercase letter');
-            }
-            
-            if (/\d/.test(password)) {
-                score += 1;
-            } else {
-                requirements.push('number');
-            }
-            
-            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-                score += 1;
-            } else {
-                requirements.push('symbol');
-            }
-            
-            return { score, requirements };
-        }
-        
-        function updatePasswordStrength() {
-            const password = document.getElementById('password').value;
-            const strengthBar = document.getElementById('passwordStrengthBar');
-            const strengthText = document.getElementById('passwordStrengthText');
-            const requirements = document.getElementById('passwordRequirements');
-            
-            if (!password) {
-                strengthBar.style.width = '0%';
-                strengthBar.className = 'progress-bar';
-                strengthText.textContent = 'Password strength: Very Weak';
-                requirements.innerHTML = '<small>Requirements: 12+ characters, uppercase, lowercase, number, symbol</small>';
-                return;
-            }
-            
-            const { score, requirements: missingRequirements } = checkPasswordStrength(password);
-            
-            let strength, width, colorClass;
-            
-            if (score === 0) {
-                strength = 'Very Weak';
-                width = '10%';
-                colorClass = 'very-weak';
-            } else if (score <= 2) {
-                strength = 'Weak';
-                width = '25%';
-                colorClass = 'weak';
-            } else if (score <= 3) {
-                strength = 'Medium';
-                width = '50%';
-                colorClass = 'medium';
-            } else if (score <= 4) {
-                strength = 'Strong';
-                width = '75%';
-                colorClass = 'strong';
-            } else {
-                strength = 'Very Strong';
-                width = '100%';
-                colorClass = 'very-strong';
-            }
-            
-            strengthBar.style.width = width;
-            strengthBar.className = `progress-bar ${colorClass}`;
-            strengthText.textContent = `Password strength: ${strength}`;
-            
-            if (missingRequirements.length > 0) {
-                requirements.innerHTML = `<small>Missing: ${missingRequirements.join(', ')}</small>`;
-            } else {
-                requirements.innerHTML = '<small class="text-success">✓ All requirements met!</small>';
-            }
-        }
-        
-        function checkPasswordMatch() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const confirmField = document.getElementById('confirmPassword');
-            const confirmError = document.getElementById('confirmPasswordError');
-            
-            if (confirmPassword && password !== confirmPassword) {
-                confirmField.classList.add('is-invalid');
-                confirmError.textContent = 'Passwords do not match';
-                confirmError.style.display = 'block';
-            } else if (confirmPassword) {
-                confirmField.classList.remove('is-invalid');
-                confirmField.classList.add('is-valid');
-                confirmError.style.display = 'none';
-            }
-        }
-        
         // Form validation and submission
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Clear previous errors
-            clearErrors();
+            // Clear all previous errors
+            clearAllErrors();
             
             // Get form data
             const formData = new FormData(this);
@@ -1504,52 +1260,52 @@
             const confirmPassword = formData.get('confirmPassword');
             const terms = formData.get('terms');
             
-            let errors = [];
+            let hasErrors = false;
             let errorFields = [];
             
             // Validate First Name
             if (!firstName) {
-                showError('firstName', 'First name is required');
-                errors.push('First Name');
+                showFieldError('firstName', 'First name is required');
+                hasErrors = true;
                 errorFields.push('firstName');
             }
             
             // Validate Last Name
             if (!lastName) {
-                showError('lastName', 'Last name is required');
-                errors.push('Last Name');
+                showFieldError('lastName', 'Last name is required');
+                hasErrors = true;
                 errorFields.push('lastName');
             }
             
             // Validate Company Name
             if (!companyName) {
-                showError('companyName', 'Company name is required');
-                errors.push('Company Name');
+                showFieldError('companyName', 'Company name is required');
+                hasErrors = true;
                 errorFields.push('companyName');
             }
             
             // Validate Email
             if (!email) {
-                showError('email', 'Email address is required');
-                errors.push('Email Address');
+                showFieldError('email', 'Email address is required');
+                hasErrors = true;
                 errorFields.push('email');
             } else {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    showError('email', 'Please enter a valid email address');
-                    errors.push('Email Address');
+                    showFieldError('email', 'Please enter a valid email address');
+                    hasErrors = true;
                     errorFields.push('email');
                 }
             }
             
             // Validate Confirm Email
             if (!confirmEmail) {
-                showError('confirmEmail', 'Please confirm your email address');
-                errors.push('Confirm Email Address');
+                showFieldError('confirmEmail', 'Please confirm your email address');
+                hasErrors = true;
                 errorFields.push('confirmEmail');
             } else if (email !== confirmEmail) {
-                showError('confirmEmail', 'Email addresses do not match');
-                errors.push('Confirm Email Address');
+                showFieldError('confirmEmail', 'Email addresses do not match');
+                hasErrors = true;
                 errorFields.push('confirmEmail');
             }
             
@@ -1557,8 +1313,8 @@
             if (phone) {
                 const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
                 if (!phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''))) {
-                    showError('phone', 'Please enter a valid phone number');
-                    errors.push('Phone Number');
+                    showFieldError('phone', 'Please enter a valid phone number');
+                    hasErrors = true;
                     errorFields.push('phone');
                 }
             }
@@ -1572,47 +1328,48 @@
                     }
                     new URL(url);
                 } catch {
-                    showError('website', 'Please enter a valid website URL');
-                    errors.push('Website');
+                    showFieldError('website', 'Please enter a valid website URL');
+                    hasErrors = true;
                     errorFields.push('website');
                 }
             }
             
             // Validate Password
             if (!password) {
-                showError('password', 'Password is required');
-                errors.push('Password');
+                showFieldError('password', 'Password is required');
+                hasErrors = true;
                 errorFields.push('password');
             } else {
-                const { score, requirements } = checkPasswordStrength(password);
-                if (score < 5) {
-                    showError('password', 'Password must be at least 12 characters with uppercase, lowercase, number, and symbol');
-                    errors.push('Password');
+                const { strength, feedback } = checkPasswordStrength(password);
+                if (strength < 100) {
+                    showFieldError('password', 'Password must be at least 12 characters with uppercase, lowercase, number, and symbol');
+                    hasErrors = true;
                     errorFields.push('password');
                 }
             }
             
             // Validate Confirm Password
             if (!confirmPassword) {
-                showError('confirmPassword', 'Please confirm your password');
-                errors.push('Confirm Password');
+                showFieldError('confirmPassword', 'Please confirm your password');
+                hasErrors = true;
                 errorFields.push('confirmPassword');
             } else if (password !== confirmPassword) {
-                showError('confirmPassword', 'Passwords do not match');
-                errors.push('Confirm Password');
+                showFieldError('confirmPassword', 'Passwords do not match');
+                hasErrors = true;
                 errorFields.push('confirmPassword');
             }
             
             // Validate Terms
             if (!terms) {
-                showError('terms', 'You must agree to the Terms of Service and Privacy Policy');
-                errors.push('Terms of Service agreement');
+                showFieldError('terms', 'You must agree to the Terms of Service and Privacy Policy');
+                hasErrors = true;
                 errorFields.push('terms');
             }
             
-            // Show error summary if there are errors
-            if (errors.length > 0) {
-                showErrorSummary(errors);
+            // If there are errors, show summary and stop submission
+            if (hasErrors) {
+                // Show error summary at the top of the form
+                showErrorSummary(errorFields);
                 return;
             }
             
@@ -1625,7 +1382,7 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
             submitBtn.disabled = true;
             
-            fetch('api/register.php', {
+                            fetch('api/register.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1651,7 +1408,7 @@
                     // Show server-side validation errors
                     if (data.errors) {
                         Object.keys(data.errors).forEach(fieldName => {
-                            showError(fieldName, data.errors[fieldName]);
+                            showFieldError(fieldName, data.errors[fieldName]);
                         });
                     }
                     
@@ -1673,65 +1430,95 @@
         });
         
         // Function to show field error
-        function showError(fieldName, message) {
+        function showFieldError(fieldName, message) {
             const field = document.getElementById(fieldName);
             const errorDiv = document.getElementById(fieldName + 'Error');
-            const label = field.previousElementSibling;
             
-            field.classList.add('is-invalid');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            
-            // Make label red
-            if (label && label.classList.contains('required')) {
-                label.classList.add('error');
+            if (field && errorDiv) {
+                field.classList.add('is-invalid');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
             }
         }
         
         // Function to clear all errors
-        function clearErrors() {
+        function clearAllErrors() {
             const fields = ['firstName', 'lastName', 'email', 'confirmEmail', 'companyName', 'phone', 'website', 'password', 'confirmPassword', 'terms'];
             
             fields.forEach(fieldName => {
                 const field = document.getElementById(fieldName);
                 const errorDiv = document.getElementById(fieldName + 'Error');
-                const label = field.previousElementSibling;
                 
-                field.classList.remove('is-invalid');
-                errorDiv.style.display = 'none';
-                
-                if (label) {
-                    label.classList.remove('error');
+                if (field) {
+                    field.classList.remove('is-invalid', 'is-valid');
+                }
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
                 }
             });
             
-            document.getElementById('errorSummary').style.display = 'none';
+            // Remove error summary if it exists
+            const existingSummary = document.getElementById('errorSummary');
+            if (existingSummary) {
+                existingSummary.remove();
+            }
         }
         
         // Function to show error summary
-        function showErrorSummary(errors) {
-            const summary = document.getElementById('errorSummary');
-            summary.innerHTML = `
-                <strong>Please correct the following ${errors.length} error${errors.length > 1 ? 's' : ''}:</strong>
+        function showErrorSummary(errorFields) {
+            // Remove existing summary if it exists
+            const existingSummary = document.getElementById('errorSummary');
+            if (existingSummary) {
+                existingSummary.remove();
+            }
+            
+            // Create error summary
+            const summaryDiv = document.createElement('div');
+            summaryDiv.id = 'errorSummary';
+            summaryDiv.className = 'alert alert-danger mb-3';
+            summaryDiv.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Please correct the following ${errorFields.length} error${errorFields.length > 1 ? 's' : ''}:</strong>
+                </div>
                 <ul class="mb-0 mt-2">
-                    ${errors.map(error => `<li>${error}</li>`).join('')}
+                    ${errorFields.map(field => {
+                        const fieldLabel = getFieldLabel(field);
+                        return `<li>${fieldLabel}</li>`;
+                    }).join('')}
                 </ul>
             `;
-            summary.style.display = 'block';
+            
+            // Insert at the top of the form
+            const form = document.getElementById('registrationForm');
+            form.insertBefore(summaryDiv, form.firstChild);
+            
+            // Scroll to the first error field
+            if (errorFields.length > 0) {
+                const firstErrorField = document.getElementById(errorFields[0]);
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorField.focus();
+                }
+            }
         }
         
-        // Add event listeners for real-time password validation
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordField = document.getElementById('password');
-            const confirmPasswordField = document.getElementById('confirmPassword');
-            
-            // Password strength real-time updates
-            passwordField.addEventListener('input', updatePasswordStrength);
-            
-            // Password confirmation real-time updates
-            passwordField.addEventListener('input', checkPasswordMatch);
-            confirmPasswordField.addEventListener('input', checkPasswordMatch);
-        });
+        // Function to get field labels
+        function getFieldLabel(fieldName) {
+            const labels = {
+                'firstName': 'First Name',
+                'lastName': 'Last Name',
+                'email': 'Email Address',
+                'confirmEmail': 'Confirm Email Address',
+                'companyName': 'Company Name',
+                'phone': 'Phone Number',
+                'website': 'Website',
+                'password': 'Password',
+                'confirmPassword': 'Confirm Password',
+                'terms': 'Terms of Service agreement'
+            };
+            return labels[fieldName] || fieldName;
+        }
     </script>
 </body>
 </html>

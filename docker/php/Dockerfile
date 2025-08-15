@@ -15,6 +15,11 @@ RUN apt-get update && apt-get install -y \
 # Install Redis extension
 RUN pecl install redis && docker-php-ext-enable redis
 
+# Configure PHP for MailHog
+RUN echo "sendmail_path = '/usr/sbin/sendmail -t -i'" >> /usr/local/etc/php/conf.d/mail.ini
+RUN echo "SMTP = mailhog" >> /usr/local/etc/php/conf.d/mail.ini
+RUN echo "smtp_port = 1025" >> /usr/local/etc/php/conf.d/mail.ini
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
