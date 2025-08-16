@@ -154,4 +154,3 @@ class ErrorHandler {
         $instance->logError($data);
     }
 }
-?>

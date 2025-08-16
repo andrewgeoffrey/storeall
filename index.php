@@ -512,12 +512,14 @@
         /* Enhanced Validation Styles */
         .form-control.is-invalid {
             border-color: #dc3545 !important;
+            border-width: 2px !important;
             box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
             background-color: #fff5f5;
         }
 
         .form-control.is-invalid:focus {
             border-color: #dc3545 !important;
+            border-width: 2px !important;
             box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
         }
 
@@ -577,6 +579,12 @@
         
         .progress-bar.very-strong {
             background-color: #20c997;
+        }
+        
+        /* Enhanced error summary styling */
+        #errorSummary {
+            border-left: 4px solid #dc3545;
+            background-color: #fff5f5;
         }
 
         /* Success state for valid fields */
@@ -890,7 +898,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="errorSummary" class="alert alert-danger mb-3" style="display: none;"></div>
-                    <form id="registrationForm">
+                    <form id="registrationForm" novalidate>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="firstName" class="form-label required">First Name</label>
@@ -906,13 +914,13 @@
                         
                         <div class="mb-3">
                             <label for="email" class="form-label required">Email Address</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="text" class="form-control" id="email" name="email" required>
                             <div class="invalid-feedback" id="emailError"></div>
                         </div>
                         
                         <div class="mb-3">
                             <label for="confirmEmail" class="form-label required">Confirm Email Address</label>
-                            <input type="email" class="form-control" id="confirmEmail" name="confirmEmail" required>
+                            <input type="text" class="form-control" id="confirmEmail" name="confirmEmail" required autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');">
                             <div class="invalid-feedback" id="confirmEmailError"></div>
                         </div>
                         
@@ -925,13 +933,13 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="phone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="(555) 123-4567">
-                                <div class="form-text">Format: (555) 123-4567 or +1-555-123-4567</div>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="555-123-4567" maxlength="12">
+                                <div class="form-text">Format: 555-123-4567</div>
                                 <div class="invalid-feedback" id="phoneError"></div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="website" class="form-label">Website (Optional)</label>
-                                <input type="url" class="form-control" id="website" name="website" placeholder="https://example.com">
+                                <input type="text" class="form-control" id="website" name="website" placeholder="https://example.com">
                                 <div class="form-text">Include https:// or we'll add it automatically</div>
                                 <div class="invalid-feedback" id="websiteError"></div>
                             </div>
@@ -941,7 +949,7 @@
                         
                         <div class="mb-3">
                             <label for="password" class="form-label required">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" name="password" required autocomplete="new-password">
                             <div class="progress mt-2" style="height: 8px;">
                                 <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
                             </div>
@@ -954,7 +962,7 @@
                         
                         <div class="mb-3">
                             <label for="confirmPassword" class="form-label required">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
                             <div class="invalid-feedback" id="confirmPasswordError"></div>
                         </div>
                         
@@ -1073,308 +1081,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Password strength checker
-        function checkPasswordStrength(password) {
-            let strength = 0;
-            let feedback = [];
-            
-            // Length check
-            if (password.length >= 12) {
-                strength += 25;
-            } else {
-                feedback.push('At least 12 characters');
-            }
-            
-            // Uppercase check
-            if (/[A-Z]/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One uppercase letter');
-            }
-            
-            // Lowercase check
-            if (/[a-z]/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One lowercase letter');
-            }
-            
-            // Number check
-            if (/\d/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One number');
-            }
-            
-            // Symbol check
-            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One special character');
-            }
-            
-            // Cap at 100%
-            strength = Math.min(strength, 100);
-            
-            return { strength, feedback };
-        }
-        
-        // Update password strength indicator
-        document.getElementById('password').addEventListener('input', function() {
-            const password = this.value;
-            const { strength, feedback } = checkPasswordStrength(password);
-            const bar = document.getElementById('passwordStrengthBar');
-            const text = document.getElementById('passwordStrengthText');
-            
-            // Update progress bar
-            bar.style.width = strength + '%';
-            
-            // Update color based on strength
-            if (strength < 40) {
-                bar.className = 'progress-bar bg-danger';
-                text.textContent = 'Password strength: Very Weak';
-            } else if (strength < 60) {
-                bar.className = 'progress-bar bg-warning';
-                text.textContent = 'Password strength: Weak';
-            } else if (strength < 80) {
-                bar.className = 'progress-bar bg-info';
-                text.textContent = 'Password strength: Fair';
-            } else if (strength < 100) {
-                bar.className = 'progress-bar bg-primary';
-                text.textContent = 'Password strength: Good';
-            } else {
-                bar.className = 'progress-bar bg-success';
-                text.textContent = 'Password strength: Strong';
-            }
-        });
-        
-        // Password strength checker
-        function checkPasswordStrength(password) {
-            let strength = 0;
-            let feedback = [];
-            
-            // Length check
-            if (password.length >= 12) {
-                strength += 25;
-            } else {
-                feedback.push('At least 12 characters');
-            }
-            
-            // Uppercase check
-            if (/[A-Z]/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One uppercase letter');
-            }
-            
-            // Lowercase check
-            if (/[a-z]/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One lowercase letter');
-            }
-            
-            // Number check
-            if (/\d/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One number');
-            }
-            
-            // Special character check (bonus)
-            if (/[!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\/?]/.test(password)) {
-                strength += 25;
-            } else {
-                feedback.push('One special character');
-            }
-            
-            // Cap at 100%
-            strength = Math.min(strength, 100);
-            
-            return { strength, feedback };
-        }
-        
-        // Update password strength indicator
-        function updatePasswordStrength(password) {
-            const { strength, feedback } = checkPasswordStrength(password);
-            const strengthBar = document.getElementById('passwordStrengthBar');
-            const strengthText = document.getElementById('passwordStrengthText');
-            
-            // Update progress bar
-            strengthBar.style.width = strength + '%';
-            
-            // Update color based on strength
-            if (strength < 25) {
-                strengthBar.className = 'progress-bar bg-danger';
-                strengthText.textContent = 'Password strength: Very Weak';
-            } else if (strength < 50) {
-                strengthBar.className = 'progress-bar bg-warning';
-                strengthText.textContent = 'Password strength: Weak';
-            } else if (strength < 75) {
-                strengthBar.className = 'progress-bar bg-info';
-                strengthText.textContent = 'Password strength: Fair';
-            } else if (strength < 100) {
-                strengthBar.className = 'progress-bar bg-primary';
-                strengthText.textContent = 'Password strength: Good';
-            } else {
-                strengthBar.className = 'progress-bar bg-success';
-                strengthText.textContent = 'Password strength: Strong';
-            }
-        }
-        
-        // Add password strength listener
-        document.getElementById('password').addEventListener('input', function() {
-            updatePasswordStrength(this.value);
-            checkPasswordMatch();
-        });
-        
-        // Add password confirmation listener
-        document.getElementById('confirmPassword').addEventListener('input', function() {
-            checkPasswordMatch();
-        });
-        
-        // Add email validation listener
-        document.getElementById('email').addEventListener('input', function() {
-            validateEmail(this.value);
-        });
-        
-        document.getElementById('confirmEmail').addEventListener('input', function() {
-            validateEmail(this.value);
-            checkEmailMatch();
-        });
-        
-        // Add phone validation listener
-        document.getElementById('phone').addEventListener('input', function() {
-            validatePhone(this.value);
-        });
-        
-        // Add website validation listener
-        document.getElementById('website').addEventListener('input', function() {
-            validateWebsite(this.value);
-        });
-        
-        // Check if passwords match
-        function checkPasswordMatch() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const confirmField = document.getElementById('confirmPassword');
-            const errorDiv = document.getElementById('confirmPasswordError');
-            
-            if (confirmPassword && password !== confirmPassword) {
-                confirmField.classList.add('is-invalid');
-                errorDiv.textContent = 'Passwords do not match';
-                errorDiv.style.display = 'block';
-            } else if (confirmPassword) {
-                confirmField.classList.remove('is-invalid');
-                errorDiv.style.display = 'none';
-            }
-        }
-        
-        // Validate email format
-        function validateEmail(email) {
-            const emailField = document.getElementById('email');
-            const errorDiv = document.getElementById('emailError');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            if (email && !emailRegex.test(email)) {
-                emailField.classList.add('is-invalid');
-                emailField.classList.remove('is-valid');
-                errorDiv.textContent = 'Please enter a valid email address';
-                errorDiv.style.display = 'block';
-                return false;
-            } else if (email) {
-                emailField.classList.remove('is-invalid');
-                emailField.classList.add('is-valid');
-                errorDiv.style.display = 'none';
-                return true;
-            } else {
-                emailField.classList.remove('is-invalid', 'is-valid');
-                errorDiv.style.display = 'none';
-            }
-            return true;
-        }
-        
-        // Check if emails match
-        function checkEmailMatch() {
-            const email = document.getElementById('email').value;
-            const confirmEmail = document.getElementById('confirmEmail').value;
-            const confirmField = document.getElementById('confirmEmail');
-            const errorDiv = document.getElementById('confirmEmailError');
-            
-            if (confirmEmail && email !== confirmEmail) {
-                confirmField.classList.add('is-invalid');
-                errorDiv.textContent = 'Email addresses do not match';
-                errorDiv.style.display = 'block';
-            } else if (confirmEmail) {
-                confirmField.classList.remove('is-invalid');
-                errorDiv.style.display = 'none';
-            }
-        }
-        
-        // Validate phone number format
-        function validatePhone(phone) {
-            const phoneField = document.getElementById('phone');
-            const errorDiv = document.getElementById('phoneError');
-            
-            if (phone) {
-                // Remove all non-digit characters except + for international format
-                const cleanPhone = phone.replace(/[^\d+]/g, '');
-                
-                // Check if it's a valid phone number (basic validation)
-                const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-                
-                if (!phoneRegex.test(cleanPhone)) {
-                    phoneField.classList.add('is-invalid');
-                    phoneField.classList.remove('is-valid');
-                    errorDiv.textContent = 'Please enter a valid phone number';
-                    errorDiv.style.display = 'block';
-                    return false;
-                } else {
-                    phoneField.classList.remove('is-invalid');
-                    phoneField.classList.add('is-valid');
-                    errorDiv.style.display = 'none';
-                    return true;
-                }
-            } else {
-                // Clear validation if field is empty (optional field)
-                phoneField.classList.remove('is-invalid', 'is-valid');
-                errorDiv.style.display = 'none';
-                return true;
-            }
-        }
-        
-        // Validate website URL format
-        function validateWebsite(website) {
-            const websiteField = document.getElementById('website');
-            const errorDiv = document.getElementById('websiteError');
-            
-            if (website) {
-                try {
-                    // Add protocol if missing
-                    let url = website;
-                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                        url = 'https://' + url;
-                    }
-                    
-                    new URL(url);
-                    websiteField.classList.remove('is-invalid');
-                    websiteField.classList.add('is-valid');
-                    errorDiv.style.display = 'none';
-                    return true;
-                } catch {
-                    websiteField.classList.add('is-invalid');
-                    websiteField.classList.remove('is-valid');
-                    errorDiv.textContent = 'Please enter a valid website URL';
-                    errorDiv.style.display = 'block';
-                    return false;
-                }
-            } else {
-                // Clear validation if field is empty (optional field)
-                websiteField.classList.remove('is-invalid', 'is-valid');
-                errorDiv.style.display = 'none';
-                return true;
-            }
-        }
+        console.log('JavaScript is loading...');
         
         // Password strength functions
         function checkPasswordStrength(password) {
@@ -1417,10 +1124,16 @@
         }
         
         function updatePasswordStrength() {
+            console.log('updatePasswordStrength called');
             const password = document.getElementById('password').value;
             const strengthBar = document.getElementById('passwordStrengthBar');
             const strengthText = document.getElementById('passwordStrengthText');
             const requirements = document.getElementById('passwordRequirements');
+            
+            console.log('Password value:', password);
+            console.log('Strength bar found:', !!strengthBar);
+            console.log('Strength text found:', !!strengthText);
+            console.log('Requirements found:', !!requirements);
             
             if (!password) {
                 strengthBar.style.width = '0%';
@@ -1484,207 +1197,32 @@
             }
         }
         
-        // Form validation and submission
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Clear previous errors
-            clearErrors();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const firstName = formData.get('firstName').trim();
-            const lastName = formData.get('lastName').trim();
-            const email = formData.get('email').trim();
-            const confirmEmail = formData.get('confirmEmail').trim();
-            const companyName = formData.get('companyName').trim();
-            const phone = formData.get('phone').trim();
-            const website = formData.get('website').trim();
-            const password = formData.get('password');
-            const confirmPassword = formData.get('confirmPassword');
-            const terms = formData.get('terms');
-            
-            let errors = [];
-            let errorFields = [];
-            
-            // Validate First Name
-            if (!firstName) {
-                showError('firstName', 'First name is required');
-                errors.push('First Name');
-                errorFields.push('firstName');
-            }
-            
-            // Validate Last Name
-            if (!lastName) {
-                showError('lastName', 'Last name is required');
-                errors.push('Last Name');
-                errorFields.push('lastName');
-            }
-            
-            // Validate Company Name
-            if (!companyName) {
-                showError('companyName', 'Company name is required');
-                errors.push('Company Name');
-                errorFields.push('companyName');
-            }
-            
-            // Validate Email
-            if (!email) {
-                showError('email', 'Email address is required');
-                errors.push('Email Address');
-                errorFields.push('email');
-            } else {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    showError('email', 'Please enter a valid email address');
-                    errors.push('Email Address');
-                    errorFields.push('email');
-                }
-            }
-            
-            // Validate Confirm Email
-            if (!confirmEmail) {
-                showError('confirmEmail', 'Please confirm your email address');
-                errors.push('Confirm Email Address');
-                errorFields.push('confirmEmail');
-            } else if (email !== confirmEmail) {
-                showError('confirmEmail', 'Email addresses do not match');
-                errors.push('Confirm Email Address');
-                errorFields.push('confirmEmail');
-            }
-            
-            // Validate Phone (if provided)
-            if (phone) {
-                const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-                if (!phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''))) {
-                    showError('phone', 'Please enter a valid phone number');
-                    errors.push('Phone Number');
-                    errorFields.push('phone');
-                }
-            }
-            
-            // Validate Website (if provided)
-            if (website) {
-                try {
-                    let url = website;
-                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                        url = 'https://' + url;
-                    }
-                    new URL(url);
-                } catch {
-                    showError('website', 'Please enter a valid website URL');
-                    errors.push('Website');
-                    errorFields.push('website');
-                }
-            }
-            
-            // Validate Password
-            if (!password) {
-                showError('password', 'Password is required');
-                errors.push('Password');
-                errorFields.push('password');
-            } else {
-                const { score, requirements } = checkPasswordStrength(password);
-                if (score < 5) {
-                    showError('password', 'Password must be at least 12 characters with uppercase, lowercase, number, and symbol');
-                    errors.push('Password');
-                    errorFields.push('password');
-                }
-            }
-            
-            // Validate Confirm Password
-            if (!confirmPassword) {
-                showError('confirmPassword', 'Please confirm your password');
-                errors.push('Confirm Password');
-                errorFields.push('confirmPassword');
-            } else if (password !== confirmPassword) {
-                showError('confirmPassword', 'Passwords do not match');
-                errors.push('Confirm Password');
-                errorFields.push('confirmPassword');
-            }
-            
-            // Validate Terms
-            if (!terms) {
-                showError('terms', 'You must agree to the Terms of Service and Privacy Policy');
-                errors.push('Terms of Service agreement');
-                errorFields.push('terms');
-            }
-            
-            // Show error summary if there are errors
-            if (errors.length > 0) {
-                showErrorSummary(errors);
-                return;
-            }
-            
-            // Submit form to server
-            const formData = new FormData(this);
-            
-            // Show loading state
-            const submitBtn = document.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
-            submitBtn.disabled = true;
-            
-            fetch('api/register.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Show success message
-                    alert(data.message);
-                    
-                    // Close the modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-                    modal.hide();
-                    
-                    // Reset the form
-                    this.reset();
-                    
-                    // Reset password strength indicator
-                    document.getElementById('passwordStrengthBar').style.width = '0%';
-                    document.getElementById('passwordStrengthText').textContent = 'Password strength: Very Weak';
-                    
-                    console.log('Registration successful:', data.data);
-                } else {
-                    // Show server-side validation errors
-                    if (data.errors) {
-                        Object.keys(data.errors).forEach(fieldName => {
-                            showError(fieldName, data.errors[fieldName]);
-                        });
-                    }
-                    
-                    // Show general error message
-                    if (data.message) {
-                        alert(data.message);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Registration error:', error);
-                alert('Registration failed. Please try again or contact support.');
-            })
-            .finally(() => {
-                // Reset button state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            });
-        });
+
         
         // Function to show field error
         function showError(fieldName, message) {
+            console.log('showError called for:', fieldName, 'with message:', message);
             const field = document.getElementById(fieldName);
             const errorDiv = document.getElementById(fieldName + 'Error');
-            const label = field.previousElementSibling;
             
-            field.classList.add('is-invalid');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
+            console.log('Field found:', !!field);
+            console.log('Error div found:', !!errorDiv);
             
-            // Make label red
-            if (label && label.classList.contains('required')) {
-                label.classList.add('error');
+            if (field && errorDiv) {
+                field.classList.add('is-invalid');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                
+                // Find the label (it might not be the previous sibling)
+                const label = field.closest('.mb-3').querySelector('label[for="' + fieldName + '"]');
+                if (label && label.classList.contains('required')) {
+                    label.classList.add('error');
+                    console.log('Label made red for:', fieldName);
+                }
+                
+                console.log('Error applied successfully for:', fieldName);
+            } else {
+                console.log('ERROR: Field or errorDiv not found for:', fieldName);
             }
         }
         
@@ -1712,25 +1250,328 @@
         function showErrorSummary(errors) {
             const summary = document.getElementById('errorSummary');
             summary.innerHTML = `
-                <strong>Please correct the following ${errors.length} error${errors.length > 1 ? 's' : ''}:</strong>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Please correct the following ${errors.length} error${errors.length > 1 ? 's' : ''}:</strong>
+                </div>
                 <ul class="mb-0 mt-2">
                     ${errors.map(error => `<li>${error}</li>`).join('')}
                 </ul>
             `;
             summary.style.display = 'block';
+            
+            // Scroll to the first error field
+            if (errorFields.length > 0) {
+                const firstErrorField = document.getElementById(errorFields[0]);
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorField.focus();
+                }
+            }
         }
         
-        // Add event listeners for real-time password validation
+        // Phone number formatting function
+        function formatPhoneNumber(input) {
+            // Remove all non-digits
+            let value = input.value.replace(/\D/g, '');
+            
+            // Limit to 10 digits
+            value = value.substring(0, 10);
+            
+            // Format as XXX-XXX-XXXX
+            if (value.length >= 6) {
+                value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+            } else if (value.length >= 3) {
+                value = value.substring(0, 3) + '-' + value.substring(3);
+            }
+            
+            input.value = value;
+        }
+        
+        // Add event listeners when modal is shown
         document.addEventListener('DOMContentLoaded', function() {
-            const passwordField = document.getElementById('password');
-            const confirmPasswordField = document.getElementById('confirmPassword');
+            console.log('DOM loaded');
             
-            // Password strength real-time updates
-            passwordField.addEventListener('input', updatePasswordStrength);
+            // Form submission handler
+            const registrationForm = document.getElementById('registrationForm');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', function(e) {
+                    console.log('Form submission started');
+                    e.preventDefault();
+                    
+                    console.log('Starting validation...');
+                    
+                    // Clear previous errors
+                    clearErrors();
+                    
+                    // Get form data
+                    const formData = new FormData(this);
+                    const firstName = formData.get('firstName').trim();
+                    const lastName = formData.get('lastName').trim();
+                    const email = formData.get('email').trim();
+                    const confirmEmail = formData.get('confirmEmail').trim();
+                    const companyName = formData.get('companyName').trim();
+                    const phone = formData.get('phone').trim();
+                    const website = formData.get('website').trim();
+                    const password = formData.get('password');
+                    const confirmPassword = formData.get('confirmPassword');
+                    const terms = formData.get('terms');
+                    
+                    let errors = [];
+                    let errorFields = [];
+                    
+                    // Validate First Name
+                    console.log('Validating firstName:', firstName);
+                    if (!firstName) {
+                        console.log('firstName validation failed');
+                        showError('firstName', 'First name is required');
+                        errors.push('First Name');
+                        errorFields.push('firstName');
+                    }
+                    
+                    // Validate Last Name
+                    console.log('Validating lastName:', lastName);
+                    if (!lastName) {
+                        console.log('lastName validation failed');
+                        showError('lastName', 'Last name is required');
+                        errors.push('Last Name');
+                        errorFields.push('lastName');
+                    }
+                    
+                    // Validate Company Name
+                    console.log('Validating companyName:', companyName);
+                    if (!companyName) {
+                        console.log('companyName validation failed');
+                        showError('companyName', 'Company name is required');
+                        errors.push('Company Name');
+                        errorFields.push('companyName');
+                    }
+                    
+                    // Validate Email
+                    if (!email) {
+                        showError('email', 'Email address is required');
+                        errors.push('Email Address');
+                        errorFields.push('email');
+                    } else {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(email)) {
+                            showError('email', 'Please enter a valid email address');
+                            errors.push('Email Address');
+                            errorFields.push('email');
+                        }
+                    }
+                    
+                    // Validate Confirm Email
+                    if (!confirmEmail) {
+                        showError('confirmEmail', 'Please confirm your email address');
+                        errors.push('Confirm Email Address');
+                        errorFields.push('confirmEmail');
+                    } else if (email.toLowerCase() !== confirmEmail.toLowerCase()) {
+                        showError('confirmEmail', 'Email addresses do not match');
+                        errors.push('Confirm Email Address');
+                        errorFields.push('confirmEmail');
+                    }
+                    
+                    // Validate Phone (if provided)
+                    if (phone) {
+                        const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+                        if (!phoneRegex.test(phone)) {
+                            showError('phone', 'Please enter phone number in format: 555-123-4567');
+                            errors.push('Phone Number');
+                            errorFields.push('phone');
+                        }
+                    }
+                    
+                    // Validate Website (if provided)
+                    if (website) {
+                        try {
+                            let url = website;
+                            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                                url = 'https://' + url;
+                            }
+                            new URL(url);
+                        } catch {
+                            showError('website', 'Please enter a valid website URL');
+                            errors.push('Website');
+                            errorFields.push('website');
+                        }
+                    }
+                    
+                    // Validate Password
+                    if (!password) {
+                        showError('password', 'Password is required');
+                        errors.push('Password');
+                        errorFields.push('password');
+                    } else {
+                        const { score, requirements } = checkPasswordStrength(password);
+                        if (score < 5) {
+                            showError('password', 'Password must be at least 12 characters with uppercase, lowercase, number, and symbol');
+                            errors.push('Password');
+                            errorFields.push('password');
+                        }
+                    }
+                    
+                    // Validate Confirm Password
+                    if (!confirmPassword) {
+                        showError('confirmPassword', 'Please confirm your password');
+                        errors.push('Confirm Password');
+                        errorFields.push('confirmPassword');
+                    } else if (password !== confirmPassword) {
+                        showError('confirmPassword', 'Passwords do not match');
+                        errors.push('Confirm Password');
+                        errorFields.push('confirmPassword');
+                    }
+                    
+                    // Validate Terms
+                    if (!terms) {
+                        showError('terms', 'You must agree to the Terms of Service and Privacy Policy');
+                        errors.push('Terms of Service agreement');
+                        errorFields.push('terms');
+                    }
+                    
+                    // Show error summary if there are errors
+                    console.log('Total errors found:', errors.length);
+                    console.log('Error fields:', errorFields);
+                    console.log('Error messages:', errors);
+                    
+                    if (errors.length > 0) {
+                        showErrorSummary(errors);
+                        return;
+                    }
+                    
+                    // Submit form to server
+                    console.log('Form validation passed, submitting to server...');
+                    
+                    // Show loading state
+                    const submitBtn = document.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+                    submitBtn.disabled = true;
+                    
+                    fetch('api/register.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        console.log('Response headers:', response.headers);
+                        return response.text().then(text => {
+                            console.log('Raw response text:', text);
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                console.error('JSON parse error:', e);
+                                throw new Error('Invalid JSON response: ' + text);
+                            }
+                        });
+                    })
+                    .then(data => {
+                        console.log('Server response:', data);
+                        if (data.success) {
+                            // Show success message
+                            alert(data.message);
+                            
+                            // Close the modal
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                            modal.hide();
+                            
+                            // Reset the form
+                            this.reset();
+                            
+                            // Reset password strength indicator
+                            document.getElementById('passwordStrengthBar').style.width = '0%';
+                            document.getElementById('passwordStrengthText').textContent = 'Password strength: Very Weak';
+                            
+                            console.log('Registration successful:', data.data);
+                        } else {
+                            // Show server-side validation errors
+                            if (data.errors) {
+                                Object.keys(data.errors).forEach(fieldName => {
+                                    showError(fieldName, data.errors[fieldName]);
+                                });
+                            }
+                            
+                            // Show general error message
+                            if (data.message) {
+                                alert(data.message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Registration error:', error);
+                        alert('Registration failed. Please try again or contact support.');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    });
+                });
+                console.log('Form submission listener added');
+            }
             
-            // Password confirmation real-time updates
-            passwordField.addEventListener('input', checkPasswordMatch);
-            confirmPasswordField.addEventListener('input', checkPasswordMatch);
+            const registerModal = document.getElementById('registerModal');
+            if (registerModal) {
+                registerModal.addEventListener('shown.bs.modal', function() {
+                    console.log('Modal shown, adding listeners');
+                    
+                    // Password strength listener
+                    const passwordField = document.getElementById('password');
+                    if (passwordField) {
+                        passwordField.addEventListener('input', updatePasswordStrength);
+                        console.log('Password listener added');
+                    }
+                    
+                    // Phone formatting listener
+                    const phoneField = document.getElementById('phone');
+                    if (phoneField) {
+                        phoneField.addEventListener('input', function() {
+                            formatPhoneNumber(this);
+                        });
+                        console.log('Phone listener added');
+                    }
+                    
+                    // Real-time validation clearing
+                    const formFields = ['firstName', 'lastName', 'email', 'confirmEmail', 'companyName', 'phone', 'website', 'password', 'confirmPassword'];
+                    formFields.forEach(fieldName => {
+                        const field = document.getElementById(fieldName);
+                        if (field) {
+                            field.addEventListener('input', function() {
+                                // Clear error for this field when user starts typing
+                                const errorDiv = document.getElementById(fieldName + 'Error');
+                                if (errorDiv) {
+                                    errorDiv.style.display = 'none';
+                                }
+                                this.classList.remove('is-invalid');
+                                
+                                // Clear error summary if all fields are valid
+                                const allFieldsValid = formFields.every(field => {
+                                    const f = document.getElementById(field);
+                                    return !f.classList.contains('is-invalid');
+                                });
+                                if (allFieldsValid) {
+                                    document.getElementById('errorSummary').style.display = 'none';
+                                }
+                            });
+                        }
+                    });
+                    
+                    // Terms checkbox validation clearing
+                    const termsField = document.getElementById('terms');
+                    if (termsField) {
+                        termsField.addEventListener('change', function() {
+                            if (this.checked) {
+                                const errorDiv = document.getElementById('termsError');
+                                if (errorDiv) {
+                                    errorDiv.style.display = 'none';
+                                }
+                                this.classList.remove('is-invalid');
+                            }
+                        });
+                    }
+                });
+                console.log('Modal event listener added');
+            }
         });
     </script>
 </body>

@@ -386,7 +386,3 @@ if (!function_exists('log_message')) {
         }
     }
 }
-?>
-
-
-

@@ -356,6 +356,3 @@ class Logger {
         $this->warning("Security event: $event", $context);
     }
 }
-
-
-

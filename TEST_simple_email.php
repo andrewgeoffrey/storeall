@@ -21,3 +21,4 @@ try {
 
 echo "<p><a href='index.php'>← Back to StoreAll.io</a></p>";
 ?>
+

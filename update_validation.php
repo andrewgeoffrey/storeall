@@ -315,3 +315,4 @@ file_put_contents('index.php', $content);
 
 echo "Validation logic updated successfully!\n";
 ?>
+

@@ -3,9 +3,9 @@
 // This file processes email verification tokens
 
 // Load configuration and core classes
-require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../includes/Database.php';
-require_once __DIR__ . '/../includes/Logger.php';
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/includes/Database.php';
+require_once __DIR__ . '/includes/Logger.php';
 
 // Get verification token from URL
 $token = $_GET['token'] ?? '';
@@ -17,40 +17,46 @@ if (empty($token)) {
         $db = Database::getInstance();
         
         // Find user with this verification token
-        // Note: In a real implementation, you'd store tokens in a separate table
-        // For now, we'll simulate finding the user
-        $userId = null;
+        $tokenData = $db->fetch(
+            "SELECT vt.user_id, vt.expires_at, vt.used_at, u.email 
+             FROM verification_tokens vt 
+             JOIN users u ON vt.user_id = u.id 
+             WHERE vt.token = ? AND vt.type = 'email_verification'",
+            [$token]
+        );
         
-        // Check if token exists in session (temporary implementation)
-        if (isset($_SESSION['verification_tokens'])) {
-            foreach ($_SESSION['verification_tokens'] as $uid => $tokenData) {
-                if ($tokenData['token'] === $token) {
-                    $userId = $uid;
-                    break;
+        if ($tokenData && !$tokenData['used_at']) {
+            // Check if token is expired
+            if (strtotime($tokenData['expires_at']) < time()) {
+                $error = 'Verification link has expired. Please request a new one.';
+            } else {
+                $userId = $tokenData['user_id'];
+                
+                // Update user's email verification status
+                $db->update('users', 
+                    ['email_verified_at' => date('Y-m-d H:i:s')], 
+                    'id = ?',
+                    [$userId]
+                );
+                
+                // Mark token as used
+                $db->update('verification_tokens',
+                    ['used_at' => date('Y-m-d H:i:s')],
+                    'token = ?',
+                    [$token]
+                );
+                
+                // Log the verification
+                if (class_exists('Logger')) {
+                    Logger::getInstance()->info('Email verified', [
+                        'user_id' => $userId,
+                        'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+                    ]);
                 }
+                
+                $success = true;
+                $message = 'Email verified successfully! You can now log in to your StoreAll.io account.';
             }
-        }
-        
-        if ($userId) {
-            // Update user's email verification status
-            $db->update('users', 
-                ['email_verified_at' => date('Y-m-d H:i:s')], 
-                ['id' => $userId]
-            );
-            
-            // Remove token from session
-            unset($_SESSION['verification_tokens'][$userId]);
-            
-            // Log the verification
-            if (class_exists('Logger')) {
-                Logger::getInstance()->info('Email verified', [
-                    'user_id' => $userId,
-                    'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
-                ]);
-            }
-            
-            $success = true;
-            $message = 'Email verified successfully! You can now log in to your StoreAll.io account.';
         } else {
             $error = 'Invalid or expired verification link.';
         }
@@ -134,4 +140,5 @@ if (empty($token)) {
     </div>
 </body>
 </html>
+
 

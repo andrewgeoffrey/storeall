@@ -111,8 +111,24 @@ try {
         }
     }
 
-    // If there are validation errors, return them
+    // If there are validation errors, log them and return
     if (!empty($errors)) {
+        // Log validation errors with user identification
+        if (class_exists('Logger')) {
+            Logger::getInstance()->warning('Registration validation failed', [
+                'email' => $email,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'company_name' => $companyName,
+                'phone' => $phone,
+                'website' => $website,
+                'validation_errors' => $errors,
+                'ip_address' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+                'request_uri' => $_SERVER['REQUEST_URI'] ?? 'unknown'
+            ]);
+        }
+        
         echo json_encode([
             'success' => false,
             'errors' => $errors,
@@ -127,6 +143,22 @@ try {
     // Check if email already exists
     $existingUser = $db->fetch("SELECT id FROM users WHERE email = ?", [$email]);
     if ($existingUser) {
+        // Log duplicate email attempt
+        if (class_exists('Logger')) {
+            Logger::getInstance()->warning('Duplicate email registration attempt', [
+                'attempted_email' => $email,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'company_name' => $companyName,
+                'phone' => $phone,
+                'website' => $website,
+                'existing_user_id' => $existingUser['id'],
+                'ip_address' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+                'request_uri' => $_SERVER['REQUEST_URI'] ?? 'unknown'
+            ]);
+        }
+        
         echo json_encode([
             'success' => false,
             'errors' => ['email' => 'An account with this email address already exists'],
@@ -199,20 +231,30 @@ try {
         $verificationToken = bin2hex(random_bytes(32));
         $verificationExpiry = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
-        // Store verification token (you might want to create a separate table for this)
-        // For now, we'll store it in a session or temporary storage
-        $_SESSION['verification_tokens'][$userId] = [
+        // Store verification token in database
+        $db->insert('verification_tokens', [
+            'user_id' => $userId,
             'token' => $verificationToken,
-            'expires' => $verificationExpiry
-        ];
+            'type' => 'email_verification',
+            'expires_at' => $verificationExpiry,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
 
-        // Log the registration
+        // Log the successful registration
         if (class_exists('Logger')) {
-            Logger::getInstance()->info('User registered via API', [
+            Logger::getInstance()->info('User registered successfully via API', [
                 'user_id' => $userId,
                 'email' => $email,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'company_name' => $companyName,
                 'organization_id' => $orgId,
-                'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+                'subdomain' => $subdomain,
+                'phone' => $phone,
+                'website' => $website,
+                'ip_address' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+                'request_uri' => $_SERVER['REQUEST_URI'] ?? 'unknown'
             ]);
         }
 
@@ -240,12 +282,20 @@ try {
         // Rollback transaction on error
         $db->rollback();
         
-        // Log the error
+        // Log the error with full user context
         if (class_exists('Logger')) {
             Logger::getInstance()->error('API registration failed', [
                 'error' => $e->getMessage(),
                 'email' => $email,
-                'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'company_name' => $companyName,
+                'phone' => $phone,
+                'website' => $website,
+                'ip_address' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+                'request_uri' => $_SERVER['REQUEST_URI'] ?? 'unknown',
+                'stack_trace' => $e->getTraceAsString()
             ]);
         }
 
@@ -257,11 +307,16 @@ try {
     }
 
 } catch (Exception $e) {
-    // Log the error
+    // Log the error with request context
     if (class_exists('Logger')) {
         Logger::getInstance()->error('API registration handler error', [
             'error' => $e->getMessage(),
-            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+            'ip_address' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+            'request_uri' => $_SERVER['REQUEST_URI'] ?? 'unknown',
+            'request_method' => $_SERVER['REQUEST_METHOD'] ?? 'unknown',
+            'post_data' => $_POST,
+            'stack_trace' => $e->getTraceAsString()
         ]);
     }
 

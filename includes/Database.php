@@ -80,7 +80,25 @@ class Database {
         }
         $setClause = implode(', ', $setParts);
 
-        $sql = "UPDATE {$table} SET {$setClause} WHERE {$where}";
+        // Handle where clause - if it's an array, convert to string
+        if (is_array($where)) {
+            $whereParts = [];
+            foreach (array_keys($where) as $column) {
+                $whereParts[] = "{$column} = :where_{$column}";
+            }
+            $whereClause = implode(' AND ', $whereParts);
+            
+            // Rename where parameters to avoid conflicts
+            $renamedWhereParams = [];
+            foreach ($where as $key => $value) {
+                $renamedWhereParams["where_{$key}"] = $value;
+            }
+            $whereParams = $renamedWhereParams;
+        } else {
+            $whereClause = $where;
+        }
+
+        $sql = "UPDATE {$table} SET {$setClause} WHERE {$whereClause}";
         $params = array_merge($data, $whereParams);
 
         $this->query($sql, $params);

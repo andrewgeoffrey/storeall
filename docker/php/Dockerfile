@@ -10,15 +10,25 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    msmtp \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Redis extension
 RUN pecl install redis && docker-php-ext-enable redis
 
-# Configure PHP for MailHog
-RUN echo "sendmail_path = '/usr/sbin/sendmail -t -i'" >> /usr/local/etc/php/conf.d/mail.ini
-RUN echo "SMTP = mailhog" >> /usr/local/etc/php/conf.d/mail.ini
-RUN echo "smtp_port = 1025" >> /usr/local/etc/php/conf.d/mail.ini
+# Configure msmtp for MailHog
+RUN echo "defaults" > /etc/msmtprc
+RUN echo "logfile /var/log/msmtp.log" >> /etc/msmtprc
+RUN echo "" >> /etc/msmtprc
+RUN echo "account default" >> /etc/msmtprc
+RUN echo "host mailhog" >> /etc/msmtprc
+RUN echo "port 1025" >> /etc/msmtprc
+RUN echo "from noreply@storeall.io" >> /etc/msmtprc
+RUN echo "tls off" >> /etc/msmtprc
+RUN echo "auth off" >> /etc/msmtprc
+
+# Configure PHP to use msmtp
+RUN echo "sendmail_path = '/usr/bin/msmtp -t'" >> /usr/local/etc/php/conf.d/mail.ini
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

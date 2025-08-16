@@ -121,6 +121,18 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
+-- Create verification_tokens table
+CREATE TABLE IF NOT EXISTS verification_tokens (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    type ENUM('email_verification', 'password_reset') NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    used_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Create error_logs table
 CREATE TABLE IF NOT EXISTS error_logs (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

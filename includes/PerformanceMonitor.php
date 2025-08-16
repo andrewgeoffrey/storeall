@@ -182,9 +182,4 @@ class PerformanceMonitor {
         return self::$instance;
     }
 }
-?>
-
-
-
-
 

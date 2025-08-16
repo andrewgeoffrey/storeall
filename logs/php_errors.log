@@ -1,0 +1,25 @@
+[15-Aug-2025 21:47:15 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 16
+[15-Aug-2025 21:47:15 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 17
+[15-Aug-2025 21:47:15 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 18
+[15-Aug-2025 21:47:15 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 19
+[15-Aug-2025 21:47:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 16
+[15-Aug-2025 21:47:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 17
+[15-Aug-2025 21:47:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 18
+[15-Aug-2025 21:47:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 19
+[15-Aug-2025 22:17:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 16
+[15-Aug-2025 22:17:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 17
+[15-Aug-2025 22:17:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 18
+[15-Aug-2025 22:17:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Auth.php:211) in /var/www/html/api/register.php on line 19
+[15-Aug-2025 22:20:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/PerformanceMonitor.php:186) in /var/www/html/api/register.php on line 16
+[15-Aug-2025 22:20:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/PerformanceMonitor.php:186) in /var/www/html/api/register.php on line 17
+[15-Aug-2025 22:20:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/PerformanceMonitor.php:186) in /var/www/html/api/register.php on line 18
+[15-Aug-2025 22:20:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/PerformanceMonitor.php:186) in /var/www/html/api/register.php on line 19
+[15-Aug-2025 22:20:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/helpers.php:390) in /var/www/html/api/register.php on line 16
+[15-Aug-2025 22:20:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/helpers.php:390) in /var/www/html/api/register.php on line 17
+[15-Aug-2025 22:20:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/helpers.php:390) in /var/www/html/api/register.php on line 18
+[15-Aug-2025 22:20:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/helpers.php:390) in /var/www/html/api/register.php on line 19
+[15-Aug-2025 22:22:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Email.php:179) in /var/www/html/api/register.php on line 16
+[15-Aug-2025 22:22:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Email.php:179) in /var/www/html/api/register.php on line 17
+[15-Aug-2025 22:22:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Email.php:179) in /var/www/html/api/register.php on line 18
+[15-Aug-2025 22:22:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/Email.php:179) in /var/www/html/api/register.php on line 19
+[16-Aug-2025 04:07:44 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 83

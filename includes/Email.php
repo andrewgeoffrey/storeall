@@ -32,17 +32,16 @@ class Email {
         $allHeaders = array_merge($defaultHeaders, $headers);
         $headerString = implode("\r\n", $allHeaders);
         
-        // For development, we'll simulate email sending
-        // In a real environment, you'd use mail() or SMTP
-        $result = true; // Simulate success for development
+        // Send email using PHP mail() function (works with MailHog)
+        $result = mail($to, $subject, $message, $headerString);
         
         // Log the email attempt
         if (class_exists('Logger')) {
-            Logger::getInstance()->info('Email sent (simulated)', [
+            Logger::getInstance()->info('Email sent via mail()', [
                 'to' => $to,
                 'subject' => $subject,
                 'success' => $result,
-                'message' => 'Email simulation for development'
+                'message' => $result ? 'Email sent successfully' : 'Email sending failed'
             ]);
         }
         
@@ -54,7 +53,7 @@ class Email {
      */
     public function sendWelcomeEmail($email, $firstName, $verificationToken) {
         $subject = 'Welcome to StoreAll.io - Confirm Your Account';
-        $verificationUrl = APP_URL . '/pages/verify-email.php?token=' . $verificationToken;
+        $verificationUrl = APP_URL . '/verify-email.php?token=' . $verificationToken;
         
         $message = $this->getWelcomeEmailTemplate($firstName, $verificationUrl);
         
@@ -175,4 +174,3 @@ class Email {
         ";
     }
 }
-?>

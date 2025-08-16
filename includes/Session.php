@@ -282,6 +282,3 @@ class Session {
         return $this;
     }
 }
-
-
-
