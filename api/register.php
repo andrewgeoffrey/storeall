@@ -35,8 +35,8 @@ try {
     // Get form data
     $firstName = trim($_POST['firstName'] ?? '');
     $lastName = trim($_POST['lastName'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $confirmEmail = trim($_POST['confirmEmail'] ?? '');
+    $email = strtolower(trim($_POST['email'] ?? ''));
+    $confirmEmail = strtolower(trim($_POST['confirmEmail'] ?? ''));
     $companyName = trim($_POST['companyName'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $website = trim($_POST['website'] ?? '');
@@ -65,7 +65,7 @@ try {
 
     if (empty($confirmEmail)) {
         $errors['confirmEmail'] = 'Please confirm your email address';
-    } elseif ($email !== $confirmEmail) {
+    } elseif (strtolower(trim($email)) !== strtolower(trim($confirmEmail))) {
         $errors['confirmEmail'] = 'Email addresses do not match';
     }
 
@@ -183,6 +183,9 @@ try {
 
     // Start transaction
     $db->beginTransaction();
+    
+    // Start performance monitoring
+    $startTime = microtime(true);
 
     try {
         // Hash password
@@ -196,6 +199,15 @@ try {
             'last_name' => $lastName,
             'created_at' => date('Y-m-d H:i:s')
         ]);
+        
+        // Log user creation
+        if (class_exists('Logger')) {
+            Logger::getInstance()->logVerificationEvent('email_verification', $userId, 'token_created', 'success', [
+                'email' => $email,
+                'first_name' => $firstName,
+                'last_name' => $lastName
+            ]);
+        }
 
         // Create organization record
         $orgId = $db->insert('organizations', [
@@ -232,13 +244,21 @@ try {
         $verificationExpiry = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
         // Store verification token in database
-        $db->insert('verification_tokens', [
+        $tokenId = $db->insert('verification_tokens', [
             'user_id' => $userId,
             'token' => $verificationToken,
             'type' => 'email_verification',
             'expires_at' => $verificationExpiry,
             'created_at' => date('Y-m-d H:i:s')
         ]);
+        
+        // Log token creation
+        if (class_exists('Logger')) {
+            Logger::getInstance()->logVerificationEvent('email_verification', $userId, 'token_created', 'success', [
+                'token_id' => $tokenId,
+                'expires_at' => $verificationExpiry
+            ]);
+        }
 
         // Log the successful registration
         if (class_exists('Logger')) {
@@ -260,10 +280,32 @@ try {
 
         // Commit transaction
         $db->commit();
+        
+        // Calculate performance metrics
+        $endTime = microtime(true);
+        $duration = ($endTime - $startTime) * 1000; // Convert to milliseconds
+        
+        // Log performance metric
+        if (class_exists('Logger')) {
+            Logger::getInstance()->logPerformanceMetric('verification_process', 'user_registration', $duration, [
+                'user_id' => $userId,
+                'organization_id' => $orgId
+            ]);
+        }
 
         // Send welcome email
+        $emailSent = false;
         if (class_exists('Email')) {
-            Email::getInstance()->sendWelcomeEmail($email, $firstName, $verificationToken);
+            $emailSent = Email::getInstance()->sendWelcomeEmail($email, $firstName, $verificationToken);
+            
+            // Log email sending
+            if (class_exists('Logger')) {
+                Logger::getInstance()->logEmailEvent('welcome', $email, 'Welcome to StoreAll.io - Confirm Your Account', 
+                    $emailSent ? 'sent' : 'failed', [
+                        'user_id' => $userId,
+                        'token_id' => $tokenId
+                    ]);
+            }
         }
 
         // Return success response

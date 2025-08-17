@@ -96,6 +96,22 @@ class Database {
             $whereParams = $renamedWhereParams;
         } else {
             $whereClause = $where;
+            // Convert positional parameters to named parameters for consistency
+            if (!empty($whereParams)) {
+                $renamedWhereParams = [];
+                foreach ($whereParams as $index => $value) {
+                    $renamedWhereParams["where_param_{$index}"] = $value;
+                }
+                $whereParams = $renamedWhereParams;
+                
+                // Replace ? with named placeholders
+                $whereClause = preg_replace_callback('/\?/', function($matches) use (&$whereParams) {
+                    static $counter = 0;
+                    $placeholder = ":where_param_{$counter}";
+                    $counter++;
+                    return $placeholder;
+                }, $whereClause);
+            }
         }
 
         $sql = "UPDATE {$table} SET {$setClause} WHERE {$whereClause}";
@@ -134,7 +150,7 @@ class Database {
     public function tableExists($tableName) {
         try {
             $result = $this->query("SHOW TABLES LIKE ?", [$tableName]);
-            return $result->rowCount() > 0;
+            return $result->fetch() !== false;
         } catch (Exception $e) {
             return false;
         }

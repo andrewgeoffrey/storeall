@@ -53,7 +53,7 @@ class Email {
      */
     public function sendWelcomeEmail($email, $firstName, $verificationToken) {
         $subject = 'Welcome to StoreAll.io - Confirm Your Account';
-        $verificationUrl = APP_URL . '/verify-email.php?token=' . $verificationToken;
+        $verificationUrl = APP_URL . '/verify-email/' . $verificationToken;
         
         $message = $this->getWelcomeEmailTemplate($firstName, $verificationUrl);
         

@@ -1081,6 +1081,43 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Client-side error logging
+        window.addEventListener('error', function(e) {
+            logClientError('javascript', e.message, {
+                file: e.filename,
+                line: e.lineno,
+                column: e.colno,
+                stack: e.error ? e.error.stack : null,
+                url: window.location.href,
+                referrer: document.referrer
+            });
+        });
+        
+        // Log unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(e) {
+            logClientError('javascript', 'Unhandled Promise Rejection: ' + e.reason, {
+                stack: e.reason && e.reason.stack ? e.reason.stack : null,
+                url: window.location.href,
+                referrer: document.referrer
+            });
+        });
+        
+        // Function to log client errors to server
+        function logClientError(errorType, errorMessage, additionalData) {
+            fetch('/api/log-client-error.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    error_type: errorType,
+                    error_message: errorMessage,
+                    additional_data: additionalData
+                })
+            }).catch(function(err) {
+                console.error('Failed to log client error:', err);
+            });
+        }
         console.log('JavaScript is loading...');
         
         // Password strength functions
@@ -1354,7 +1391,7 @@
                         errorFields.push('email');
                     } else {
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (!emailRegex.test(email)) {
+                        if (!emailRegex.test(email.toLowerCase())) {
                             showError('email', 'Please enter a valid email address');
                             errors.push('Email Address');
                             errorFields.push('email');
@@ -1366,7 +1403,7 @@
                         showError('confirmEmail', 'Please confirm your email address');
                         errors.push('Confirm Email Address');
                         errorFields.push('confirmEmail');
-                    } else if (email.toLowerCase() !== confirmEmail.toLowerCase()) {
+                    } else if (email.trim().toLowerCase() !== confirmEmail.trim().toLowerCase()) {
                         showError('confirmEmail', 'Email addresses do not match');
                         errors.push('Confirm Email Address');
                         errorFields.push('confirmEmail');
