@@ -32,12 +32,17 @@ class Auth {
             }
             
             $user = $this->db->fetch("
-                SELECT id, username, email, password, role, status, created_at 
-                FROM users 
-                WHERE email = ? AND status = 'active'
+                SELECT u.id, u.email, u.password_hash, u.first_name, u.last_name, u.email_verified_at, u.created_at,
+                       ur.role, o.subdomain as organization_slug, o.name as organization_name
+                FROM users u
+                LEFT JOIN user_roles ur ON u.id = ur.user_id
+                LEFT JOIN organizations o ON ur.organization_id = o.id
+                WHERE u.email = ? AND u.email_verified_at IS NOT NULL
+                ORDER BY ur.created_at DESC
+                LIMIT 1
             ", [$email]);
             
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && password_verify($password, $user['password_hash'])) {
                 // Start session and store user data
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
@@ -117,9 +122,14 @@ class Auth {
         
         try {
             $this->currentUser = $this->db->fetch("
-                SELECT id, username, email, role, status, created_at 
-                FROM users 
-                WHERE id = ? AND status = 'active'
+                SELECT u.id, u.email, u.first_name, u.last_name, u.email_verified_at, u.created_at,
+                       ur.role, o.subdomain as organization_slug, o.name as organization_name
+                FROM users u
+                LEFT JOIN user_roles ur ON u.id = ur.user_id
+                LEFT JOIN organizations o ON ur.organization_id = o.id
+                WHERE u.id = ? AND u.email_verified_at IS NOT NULL
+                ORDER BY ur.created_at DESC
+                LIMIT 1
             ", [$userId]);
             
             return $this->currentUser;
@@ -161,7 +171,7 @@ class Auth {
             }
             
             // Validate required fields
-            $required = ['username', 'email', 'password', 'role'];
+            $required = ['email', 'password'];
             foreach ($required as $field) {
                 if (empty($userData[$field])) {
                     throw new Exception("Missing required field: $field");
@@ -179,13 +189,22 @@ class Auth {
             
             // Insert new user
             $userId = $this->db->insert('users', [
-                'username' => $userData['username'],
                 'email' => $userData['email'],
-                'password' => $hashedPassword,
-                'role' => $userData['role'],
-                'status' => 'pending',
+                'password_hash' => $hashedPassword,
+                'first_name' => $userData['first_name'] ?? '',
+                'last_name' => $userData['last_name'] ?? '',
                 'created_at' => date('Y-m-d H:i:s')
             ]);
+            
+            // Insert user role
+            if ($userId && isset($userData['role'])) {
+                $this->db->insert('user_roles', [
+                    'user_id' => $userId,
+                    'role' => $userData['role'],
+                    'organization_id' => $userData['organization_id'] ?? null,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }
             
             if (class_exists('Logger')) {
                 Logger::getInstance()->info('User registered', [

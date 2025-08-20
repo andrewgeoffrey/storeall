@@ -9,14 +9,7 @@ class Session {
     private $started = false;
     
     private function __construct() {
-        // Configure session settings
-        ini_set('session.cookie_httponly', 1);
-        ini_set('session.cookie_secure', 1);
-        ini_set('session.use_strict_mode', 1);
-        ini_set('session.cookie_samesite', 'Strict');
-        
-        // Set session name
-        session_name('STOREALL_SESSION');
+        // Session configuration will be done when session is first started
     }
     
     public static function getInstance() {
@@ -31,6 +24,15 @@ class Session {
      */
     public function start() {
         if (!$this->started && session_status() === PHP_SESSION_NONE) {
+            // Configure session settings before starting
+            ini_set('session.cookie_httponly', 1);
+            ini_set('session.cookie_secure', 1);
+            ini_set('session.use_strict_mode', 1);
+            ini_set('session.cookie_samesite', 'Strict');
+            
+            // Set session name
+            session_name('STOREALL_SESSION');
+            
             session_start();
             $this->started = true;
             

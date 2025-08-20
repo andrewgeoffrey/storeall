@@ -281,6 +281,27 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
         }
+        
+        .form-control.is-loading {
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23666" class="bi bi-arrow-clockwise" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message.text-success {
+            color: #28a745 !important;
+        }
+        
+        .error-message.text-warning {
+            color: #ffc107 !important;
+        }
 
         .form-select {
             border: 2px solid var(--border-color);
@@ -1325,6 +1346,85 @@
             input.value = value;
         }
         
+        // Email availability checker
+        function checkEmailAvailability(email, field) {
+            const formData = new FormData();
+            formData.append('email', email);
+            
+            fetch('api/check-email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading state
+                field.classList.remove('is-loading');
+                
+                if (data.success) {
+                    if (data.available) {
+                        // Email is available
+                        field.classList.add('is-valid');
+                        field.classList.remove('is-invalid');
+                        
+                        // Show success message
+                        const errorDiv = document.getElementById('emailError');
+                        if (errorDiv) {
+                            errorDiv.textContent = '✅ ' + data.message;
+                            errorDiv.className = 'error-message text-success';
+                            errorDiv.style.display = 'block';
+                        }
+                    } else {
+                        // Email is not available
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        
+                        // Show error message
+                        const errorDiv = document.getElementById('emailError');
+                        if (errorDiv) {
+                            errorDiv.textContent = '❌ ' + data.message;
+                            errorDiv.className = 'error-message text-danger';
+                            errorDiv.style.display = 'block';
+                        }
+                        
+                        // If email is verified, suggest login
+                        if (data.email_verified) {
+                            const loginSuggestion = document.createElement('div');
+                            loginSuggestion.className = 'text-info mt-1';
+                            loginSuggestion.innerHTML = '<small><i class="fas fa-info-circle"></i> <a href="#" onclick="showLoginModal()">Click here to log in</a> instead</small>';
+                            
+                            const errorDiv = document.getElementById('emailError');
+                            if (errorDiv && !errorDiv.nextElementSibling?.classList.contains('text-info')) {
+                                errorDiv.parentNode.insertBefore(loginSuggestion, errorDiv.nextSibling);
+                            }
+                        }
+                    }
+                } else {
+                    // Error checking email
+                    field.classList.add('is-invalid');
+                    field.classList.remove('is-valid');
+                    
+                    const errorDiv = document.getElementById('emailError');
+                    if (errorDiv) {
+                        errorDiv.textContent = '⚠️ ' + data.message;
+                        errorDiv.className = 'error-message text-warning';
+                        errorDiv.style.display = 'block';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Email check error:', error);
+                field.classList.remove('is-loading');
+                
+                // Show generic error
+                const errorDiv = document.getElementById('emailError');
+                if (errorDiv) {
+                    errorDiv.textContent = '⚠️ Unable to check email availability';
+                    errorDiv.className = 'error-message text-warning';
+                    errorDiv.style.display = 'block';
+                }
+            });
+        }
+        
         // Add event listeners when modal is shown
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded');
@@ -1592,6 +1692,39 @@
                             });
                         }
                     });
+                    
+                    // Real-time email availability checking
+                    const emailField = document.getElementById('email');
+                    if (emailField) {
+                        let emailCheckTimeout;
+                        
+                        emailField.addEventListener('input', function() {
+                            const email = this.value.trim();
+                            
+                            // Clear previous timeout
+                            if (emailCheckTimeout) {
+                                clearTimeout(emailCheckTimeout);
+                            }
+                            
+                            // Clear previous email status
+                            const errorDiv = document.getElementById('emailError');
+                            if (errorDiv) {
+                                errorDiv.style.display = 'none';
+                            }
+                            this.classList.remove('is-invalid', 'is-valid');
+                            
+                            // Only check if email is valid format and not empty
+                            if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                                // Add loading indicator
+                                this.classList.add('is-loading');
+                                
+                                // Debounce the check (wait 500ms after user stops typing)
+                                emailCheckTimeout = setTimeout(() => {
+                                    checkEmailAvailability(email, this);
+                                }, 500);
+                            }
+                        });
+                    }
                     
                     // Terms checkbox validation clearing
                     const termsField = document.getElementById('terms');

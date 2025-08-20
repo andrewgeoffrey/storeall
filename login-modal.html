@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreAll.io - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .login-modal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .modal-body {
+            padding: 40px;
+        }
+        
+        .form-floating {
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .form-check {
+            margin: 20px 0;
+        }
+        
+        .alert {
+            border-radius: 15px;
+            border: none;
+            padding: 15px 20px;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner-border {
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        .mfa-section {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .mfa-input {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+        
+        .password-reset-section {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .device-info {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .device-info h6 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .device-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .device-info li {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+        
+        .success-animation {
+            animation: successPulse 0.6s ease-in-out;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .error-shake {
+            animation: errorShake 0.5s ease-in-out;
+        }
+        
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .password-strength {
+            margin-top: 10px;
+        }
+        
+        .strength-bar {
+            height: 5px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak { background: #dc3545; }
+        .strength-medium { background: #ffc107; }
+        .strength-strong { background: #28a745; }
+        
+        .portal-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .portal-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .portal-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-modal">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <div>
+                    <h2><i class="fas fa-shield-alt"></i> StoreAll.io</h2>
+                    <p class="mb-0">Secure Login Portal</p>
+                </div>
+            </div>
+            
+            <!-- Body -->
+            <div class="modal-body">
+                <!-- Login Form -->
+                <form id="loginForm">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <label for="email">Email Address</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    
+                    <!-- Device Trust Option -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberDevice">
+                        <label class="form-check-label" for="rememberDevice">
+                            <i class="fas fa-lock"></i> Trust this device for 30 days (skip MFA)
+                        </label>
+                    </div>
+                    
+                    <!-- Device Name Input (shown when remember device is checked) -->
+                    <div class="form-floating" id="deviceNameSection" style="display: none;">
+                        <input type="text" class="form-control" id="deviceName" placeholder="Device Name">
+                        <label for="deviceName">Device Name (e.g., Home Computer, Work Laptop)</label>
+                    </div>
+                    
+                    <!-- Device Information Display -->
+                    <div class="device-info" id="deviceInfo">
+                        <h6><i class="fas fa-info-circle"></i> Device Information</h6>
+                        <ul id="deviceInfoList">
+                            <li><i class="fas fa-desktop"></i> <span id="devicePlatform">Loading...</span></li>
+                            <li><i class="fas fa-globe"></i> <span id="deviceLocation">Loading...</span></li>
+                            <li><i class="fas fa-clock"></i> <span id="deviceTimezone">Loading...</span></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Loading Spinner -->
+                    <div class="loading-spinner" id="loadingSpinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Authenticating...</p>
+                    </div>
+                    
+                    <!-- Alert Messages -->
+                    <div id="alertContainer"></div>
+                    
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-primary w-100" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+                
+                <!-- MFA Section -->
+                <div class="mfa-section" id="mfaSection">
+                    <h5><i class="fas fa-key"></i> Two-Factor Authentication</h5>
+                    <p class="text-muted">We've sent a verification code to your email address.</p>
+                    
+                    <div class="form-floating">
+                        <input type="text" class="form-control mfa-input" id="mfaCode" placeholder="000000" maxlength="6">
+                        <label for="mfaCode">Enter 6-digit code</label>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100" id="verifyMfaBtn">
+                        <i class="fas fa-check"></i> Verify Code
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        <button type="button" class="btn btn-link" id="resendMfaBtn">
+                            <i class="fas fa-redo"></i> Resend Code
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Password Reset Section -->
+                <div class="password-reset-section" id="passwordResetSection">
+                    <h5><i class="fas fa-key"></i> Reset Password</h5>
+                    <p class="text-muted">Enter your email address to receive a password reset link.</p>
+                    
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="resetEmail" placeholder="Email">
+                        <label for="resetEmail">Email Address</label>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100" id="sendResetBtn">
+                        <i class="fas fa-paper-plane"></i> Send Reset Link
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        <button type="button" class="btn btn-link" id="backToLoginBtn">
+                            <i class="fas fa-arrow-left"></i> Back to Login
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Portal Links -->
+                <div class="portal-links">
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <a href="#" onclick="showPasswordReset()">
+                                <i class="fas fa-unlock"></i> Forgot Password?
+                            </a>
+                        </div>
+                        <div class="col-6 text-center">
+                            <a href="#" onclick="showOwnerPortal()">
+                                <i class="fas fa-user-tie"></i> Owner Portal
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 text-center">
+                            <a href="#" onclick="showCustomerPortal()">
+                                <i class="fas fa-users"></i> Customer Portal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let currentEmail = '';
+        let deviceFingerprint = '';
+        let environmentData = {};
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            collectEnvironmentData();
+            setupEventListeners();
+            displayDeviceInfo();
+        });
+        
+        // Collect environment data for fingerprinting
+        function collectEnvironmentData() {
+            environmentData = {
+                screen_resolution: `${screen.width}x${screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                language: navigator.language,
+                platform: navigator.platform,
+                cookie_enabled: navigator.cookieEnabled,
+                user_agent: navigator.userAgent,
+                color_depth: screen.colorDepth,
+                pixel_ratio: window.devicePixelRatio,
+                viewport: `${window.innerWidth}x${window.innerHeight}`,
+                do_not_track: navigator.doNotTrack,
+                hardware_concurrency: navigator.hardwareConcurrency,
+                max_touch_points: navigator.maxTouchPoints
+            };
+            
+            // Generate device fingerprint
+            const fingerprintData = JSON.stringify(environmentData);
+            deviceFingerprint = btoa(fingerprintData).substring(0, 32);
+        }
+        
+        // Display device information
+        function displayDeviceInfo() {
+            document.getElementById('devicePlatform').textContent = environmentData.platform;
+            document.getElementById('deviceLocation').textContent = environmentData.timezone;
+            document.getElementById('deviceTimezone').textContent = new Date().toLocaleTimeString();
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Remember device checkbox
+            document.getElementById('rememberDevice').addEventListener('change', function() {
+                const deviceNameSection = document.getElementById('deviceNameSection');
+                deviceNameSection.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // MFA verification
+            document.getElementById('verifyMfaBtn').addEventListener('click', handleMfaVerification);
+            document.getElementById('resendMfaBtn').addEventListener('click', handleResendMfa);
+            
+            // Password reset
+            document.getElementById('sendResetBtn').addEventListener('click', handlePasswordReset);
+            document.getElementById('backToLoginBtn').addEventListener('click', showLoginForm);
+            
+            // MFA code input formatting
+            document.getElementById('mfaCode').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6);
+            });
+        }
+        
+        // Handle login form submission
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberDevice = document.getElementById('rememberDevice').checked;
+            const deviceName = document.getElementById('deviceName').value.trim();
+            
+            if (!email || !password) {
+                showAlert('Please fill in all required fields.', 'danger');
+                return;
+            }
+            
+            currentEmail = email;
+            showLoading(true);
+            
+            try {
+                const formData = new FormData();
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('remember_device', rememberDevice ? '1' : '0');
+                formData.append('device_name', deviceName || 'Unknown Device');
+                
+                // Add environment data
+                Object.keys(environmentData).forEach(key => {
+                    formData.append(key, environmentData[key]);
+                });
+                
+                const response = await fetch('/api/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Login successful
+                    showAlert('Login successful! Redirecting...', 'success');
+                    document.getElementById('loginForm').classList.add('success-animation');
+                    
+                    // Store session data
+                    localStorage.setItem('user_session', JSON.stringify(data.user));
+                    localStorage.setItem('session_id', data.session_id);
+                    
+                    // Redirect based on user role
+                    setTimeout(() => {
+                        if (data.user.role === 'owner') {
+                            window.location.href = '/owner/dashboard.php';
+                        } else {
+                            window.location.href = '/customer/dashboard.php';
+                        }
+                    }, 2000);
+                    
+                } else if (data.mfa_required) {
+                    // MFA required
+                    showMfaSection();
+                    showAlert('Please enter the verification code sent to your email.', 'info');
+                    
+                } else if (data.email_verification_required) {
+                    // Email verification required
+                    showAlert('Please verify your email address before logging in. Check your email for a verification link.', 'warning');
+                    
+                } else if (data.locked) {
+                    // Account locked
+                    showAlert(data.message, 'danger');
+                    
+                } else {
+                    // Other errors
+                    showAlert(data.message || 'Login failed. Please try again.', 'danger');
+                    document.getElementById('loginForm').classList.add('error-shake');
+                    setTimeout(() => {
+                        document.getElementById('loginForm').classList.remove('error-shake');
+                    }, 500);
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('An error occurred during login. Please try again.', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Handle MFA verification
+        async function handleMfaVerification() {
+            const mfaCode = document.getElementById('mfaCode').value.trim();
+            
+            if (!mfaCode || mfaCode.length !== 6) {
+                showAlert('Please enter a valid 6-digit verification code.', 'danger');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const formData = new FormData();
+                formData.append('email', currentEmail);
+                formData.append('mfa_code', mfaCode);
+                
+                // Add environment data
+                Object.keys(environmentData).forEach(key => {
+                    formData.append(key, environmentData[key]);
+                });
+                
+                const response = await fetch('/api/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Verification successful! Redirecting...', 'success');
+                    
+                    // Store session data
+                    localStorage.setItem('user_session', JSON.stringify(data.user));
+                    localStorage.setItem('session_id', data.session_id);
+                    
+                    // Redirect based on user role
+                    setTimeout(() => {
+                        if (data.user.role === 'owner') {
+                            window.location.href = '/owner/dashboard.php';
+                        } else {
+                            window.location.href = '/customer/dashboard.php';
+                        }
+                    }, 2000);
+                    
+                } else {
+                    showAlert(data.message || 'Invalid verification code.', 'danger');
+                    document.getElementById('mfaCode').value = '';
+                    document.getElementById('mfaCode').focus();
+                }
+                
+            } catch (error) {
+                console.error('MFA verification error:', error);
+                showAlert('An error occurred during verification. Please try again.', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Handle resend MFA code
+        async function handleResendMfa() {
+            showLoading(true);
+            
+            try {
+                const formData = new FormData();
+                formData.append('email', currentEmail);
+                formData.append('resend_mfa', '1');
+                
+                const response = await fetch('/api/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Verification code resent to your email.', 'success');
+                } else {
+                    showAlert(data.message || 'Failed to resend verification code.', 'danger');
+                }
+                
+            } catch (error) {
+                console.error('Resend MFA error:', error);
+                showAlert('An error occurred while resending the code.', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Handle password reset
+        async function handlePasswordReset() {
+            const resetEmail = document.getElementById('resetEmail').value.trim();
+            
+            if (!resetEmail) {
+                showAlert('Please enter your email address.', 'danger');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const formData = new FormData();
+                formData.append('email', resetEmail);
+                formData.append('action', 'reset_password');
+                
+                const response = await fetch('/api/password-reset.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Password reset link sent to your email address.', 'success');
+                    showLoginForm();
+                } else {
+                    showAlert(data.message || 'Failed to send password reset link.', 'danger');
+                }
+                
+            } catch (error) {
+                console.error('Password reset error:', error);
+                showAlert('An error occurred while processing your request.', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Show MFA section
+        function showMfaSection() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('mfaSection').style.display = 'block';
+            document.getElementById('passwordResetSection').style.display = 'none';
+            document.getElementById('mfaCode').focus();
+        }
+        
+        // Show password reset section
+        function showPasswordReset() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('mfaSection').style.display = 'none';
+            document.getElementById('passwordResetSection').style.display = 'block';
+            document.getElementById('resetEmail').focus();
+        }
+        
+        // Show login form
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('mfaSection').style.display = 'none';
+            document.getElementById('passwordResetSection').style.display = 'none';
+        }
+        
+        // Show owner portal
+        function showOwnerPortal() {
+            window.open('/owner/login.php', '_blank');
+        }
+        
+        // Show customer portal
+        function showCustomerPortal() {
+            window.open('/customer/login.php', '_blank');
+        }
+        
+        // Show loading spinner
+        function showLoading(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            const loginBtn = document.getElementById('loginBtn');
+            const verifyBtn = document.getElementById('verifyMfaBtn');
+            const resetBtn = document.getElementById('sendResetBtn');
+            
+            if (show) {
+                spinner.style.display = 'block';
+                if (loginBtn) loginBtn.disabled = true;
+                if (verifyBtn) verifyBtn.disabled = true;
+                if (resetBtn) resetBtn.disabled = true;
+            } else {
+                spinner.style.display = 'none';
+                if (loginBtn) loginBtn.disabled = false;
+                if (verifyBtn) verifyBtn.disabled = false;
+                if (resetBtn) resetBtn.disabled = false;
+            }
+        }
+        
+        // Show alert message
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertId = 'alert-' + Date.now();
+            
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" id="${alertId}" role="alert">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            
+            alertContainer.innerHTML = alertHtml;
+            
+            // Auto-dismiss success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    const alert = document.getElementById(alertId);
+                    if (alert) {
+                        alert.remove();
+                    }
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -158,3 +158,5 @@ echo "<p><strong>Email Match:</strong> " . (strtolower(trim($email)) === strtolo
 echo "<p><strong>Password Length:</strong> " . strlen($password) . " characters</p>";
 echo "<p><strong>Password Strength:</strong> " . (strlen($password) >= 12 ? '✅ Strong enough' : '❌ Too short') . "</p>";
 ?>
+
+

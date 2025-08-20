@@ -91,3 +91,5 @@ echo "<li>Simplified the location block to directly pass requests to PHP-FPM</li
 echo "<li>Restarted Nginx to apply the configuration changes</li>";
 echo "</ul>";
 ?>
+
+

@@ -186,3 +186,5 @@ INSERT INTO application_logs (level, message, context, timestamp, ip_address, us
 
 -- Show created tables
 SHOW TABLES LIKE '%log%';
+
+

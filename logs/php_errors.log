@@ -25,3 +25,15 @@
 [16-Aug-2025 04:07:44 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 83
 [17-Aug-2025 05:05:56 UTC] Failed to log verification event: Query failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`storeall_dev`.`verification_logs`, CONSTRAINT `verification_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
 [17-Aug-2025 05:06:48 UTC] Failed to log verification event: Query failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`storeall_dev`.`verification_logs`, CONSTRAINT `verification_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+[20-Aug-2025 03:12:03 UTC] Failed to log verification event: Query failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`storeall_dev`.`verification_logs`, CONSTRAINT `verification_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+[20-Aug-2025 03:29:56 UTC] PHP Warning:  Undefined array key "REQUEST_METHOD" in /var/www/html/api/check-email.php on line 14
+[20-Aug-2025 03:29:56 UTC] PHP Warning:  Undefined array key "REQUEST_METHOD" in /var/www/html/api/check-email.php on line 20
+[20-Aug-2025 04:12:21 UTC] PHP Fatal error:  Uncaught Error: Non-static method Auth::isLoggedIn() cannot be called statically in /var/www/html/login/index.php:14
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/login/index.php on line 14
+[20-Aug-2025 04:38:40 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /var/www/html/includes/Session.php on line 13
+[20-Aug-2025 04:38:40 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /var/www/html/includes/Session.php on line 14
+[20-Aug-2025 04:38:40 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /var/www/html/includes/Session.php on line 15
+[20-Aug-2025 04:38:40 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /var/www/html/includes/Session.php on line 16
+[20-Aug-2025 04:38:40 UTC] PHP Warning:  session_name(): Session name cannot be changed when a session is active in /var/www/html/includes/Session.php on line 19

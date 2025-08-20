@@ -141,3 +141,5 @@ echo "<p>2. Check MailHog for email logs</p>";
 echo "<p>3. Monitor the logging tables for real user activity</p>";
 echo "<p>4. Set up monitoring alerts for critical errors</p>";
 ?>
+
+
