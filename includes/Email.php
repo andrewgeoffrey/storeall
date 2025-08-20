@@ -65,9 +65,42 @@ class Email {
      */
     public function sendPasswordResetEmail($email, $firstName, $resetToken) {
         $subject = 'Reset Your StoreAll.io Password';
-        $resetUrl = APP_URL . '/pages/reset-password.php?token=' . $resetToken;
+        $resetUrl = APP_URL . '/reset-password/?email=' . urlencode($email) . '&token=' . $resetToken;
         
         $message = $this->getPasswordResetTemplate($firstName, $resetUrl);
+        
+        return $this->send($email, $subject, $message);
+    }
+    
+    /**
+     * Send MFA verification code
+     */
+    public function sendMFACode($email, $firstName, $mfaCode, $locationData = null) {
+        $subject = 'Your StoreAll.io Login Verification Code';
+        
+        $message = $this->getMFATemplate($firstName, $mfaCode, $locationData);
+        
+        return $this->send($email, $subject, $message);
+    }
+    
+    /**
+     * Send login notification
+     */
+    public function sendLoginNotification($email, $firstName, $locationData, $deviceInfo) {
+        $subject = 'New Login to Your StoreAll.io Account';
+        
+        $message = $this->getLoginNotificationTemplate($firstName, $locationData, $deviceInfo);
+        
+        return $this->send($email, $subject, $message);
+    }
+    
+    /**
+     * Send password change notification
+     */
+    public function sendPasswordChangeNotification($email, $firstName, $ipAddress) {
+        $subject = 'Your StoreAll.io Password Has Been Changed';
+        
+        $message = $this->getPasswordChangeTemplate($firstName, $ipAddress);
         
         return $this->send($email, $subject, $message);
     }
@@ -167,6 +200,173 @@ class Email {
                 <div class='footer'>
                     <p>Best regards,<br>The StoreAll.io Team</p>
                     <p>This email was sent to you because you requested a password reset.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+    }
+    
+    /**
+     * Get MFA verification email HTML template
+     */
+    private function getMFATemplate($firstName, $mfaCode, $locationData = null) {
+        $locationInfo = '';
+        if ($locationData) {
+            $locationInfo = "
+                <p><strong>Login Location:</strong> " . ($locationData['city'] ?? 'Unknown') . ", " . ($locationData['country'] ?? 'Unknown') . "</p>
+                <p><strong>IP Address:</strong> " . ($locationData['query'] ?? 'Unknown') . "</p>
+            ";
+        }
+        
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Login Verification - StoreAll.io</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; }
+                .code { background: #059669; color: white; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 5px; border-radius: 10px; margin: 20px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Login Verification</h1>
+                </div>
+                <div class='content'>
+                    <h2>Hi {$firstName},</h2>
+                    <p>We received a login request for your StoreAll.io account.</p>
+                    {$locationInfo}
+                    <p>Please enter this verification code to complete your login:</p>
+                    
+                    <div class='code'>{$mfaCode}</div>
+                    
+                    <p><strong>Important:</strong> This code will expire in 10 minutes.</p>
+                    <p>If you didn't attempt to log in, please contact support immediately.</p>
+                </div>
+                <div class='footer'>
+                    <p>Best regards,<br>The StoreAll.io Team</p>
+                    <p>This email was sent to you because someone attempted to log into your account.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+    }
+    
+    /**
+     * Get login notification email HTML template
+     */
+    private function getLoginNotificationTemplate($firstName, $locationData, $deviceInfo) {
+        $locationInfo = '';
+        if ($locationData) {
+            $locationInfo = "
+                <p><strong>Location:</strong> " . ($locationData['city'] ?? 'Unknown') . ", " . ($locationData['country'] ?? 'Unknown') . "</p>
+                <p><strong>IP Address:</strong> " . ($locationData['query'] ?? 'Unknown') . "</p>
+            ";
+        }
+        
+        $deviceInfoText = '';
+        if ($deviceInfo) {
+            $deviceInfoText = "
+                <p><strong>Device:</strong> " . ($deviceInfo['platform'] ?? 'Unknown') . "</p>
+                <p><strong>Browser:</strong> " . ($deviceInfo['user_agent'] ?? 'Unknown') . "</p>
+            ";
+        }
+        
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>New Login - StoreAll.io</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; }
+                .info-box { background: #e5e7eb; padding: 15px; border-radius: 5px; margin: 15px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>New Login Detected</h1>
+                </div>
+                <div class='content'>
+                    <h2>Hi {$firstName},</h2>
+                    <p>We detected a new login to your StoreAll.io account.</p>
+                    
+                    <div class='info-box'>
+                        <h3>Login Details:</h3>
+                        {$locationInfo}
+                        {$deviceInfoText}
+                        <p><strong>Time:</strong> " . date('Y-m-d H:i:s T') . "</p>
+                    </div>
+                    
+                    <p>If this was you, you can safely ignore this email.</p>
+                    <p>If you don't recognize this login, please contact support immediately.</p>
+                </div>
+                <div class='footer'>
+                    <p>Best regards,<br>The StoreAll.io Team</p>
+                    <p>This email was sent to you because a new login was detected on your account.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+    }
+    
+    /**
+     * Get password change notification email HTML template
+     */
+    private function getPasswordChangeTemplate($firstName, $ipAddress) {
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Password Changed - StoreAll.io</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; }
+                .info-box { background: #e5e7eb; padding: 15px; border-radius: 5px; margin: 15px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Password Changed</h1>
+                </div>
+                <div class='content'>
+                    <h2>Hi {$firstName},</h2>
+                    <p>Your StoreAll.io password has been successfully changed.</p>
+                    
+                    <div class='info-box'>
+                        <h3>Change Details:</h3>
+                        <p><strong>IP Address:</strong> {$ipAddress}</p>
+                        <p><strong>Time:</strong> " . date('Y-m-d H:i:s T') . "</p>
+                    </div>
+                    
+                    <p>If you made this change, you can safely ignore this email.</p>
+                    <p>If you didn't change your password, please contact support immediately.</p>
+                </div>
+                <div class='footer'>
+                    <p>Best regards,<br>The StoreAll.io Team</p>
+                    <p>This email was sent to you because your password was changed.</p>
                 </div>
             </div>
         </body>
