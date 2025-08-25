@@ -363,3 +363,4 @@ function sendLoginNotification($user, $locationData, $suspiciousActivity) {
     }
 }
 ?>
+

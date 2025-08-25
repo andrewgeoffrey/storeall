@@ -95,3 +95,4 @@ SELECT id, TRUE, 'email', TRUE, 30, TRUE, TRUE FROM users;
 CREATE INDEX idx_login_attempts_user_success ON login_attempts(user_id, success);
 CREATE INDEX idx_login_attempts_email_success ON login_attempts(email, success);
 CREATE INDEX idx_trusted_devices_user_active ON trusted_devices(user_id, is_active);
+

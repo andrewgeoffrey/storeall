@@ -383,3 +383,4 @@ function processPasswordUpdate($email, $token, $newPassword) {
     <script src="/js/password-reset.js"></script>
 </body>
 </html>
+
