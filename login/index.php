@@ -1,4 +1,7 @@
 <?php
+// Start output buffering to prevent headers already sent errors
+ob_start();
+
 // Login Page - Main Entry Point
 // This file handles the login functionality with environment tracking and MFA support
 
@@ -219,3 +222,4 @@ $session->delete('login_success');
     <script src="/js/login.js"></script>
 </body>
 </html>
+<?php ob_end_flush(); ?>

@@ -37,3 +37,765 @@ Stack trace:
 [20-Aug-2025 04:38:40 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /var/www/html/includes/Session.php on line 15
 [20-Aug-2025 04:38:40 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /var/www/html/includes/Session.php on line 16
 [20-Aug-2025 04:38:40 UTC] PHP Warning:  session_name(): Session name cannot be changed when a session is active in /var/www/html/includes/Session.php on line 19
+[25-Aug-2025 03:45:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Auth::createUser() in /var/www/html/test_mfa_system.php:74
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(44): MFASystemTest->setupTestData()
+#1 /var/www/html/test_mfa_system.php(473): MFASystemTest->runAllTests()
+#2 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 74
+[25-Aug-2025 03:56:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Database::execute() in /var/www/html/setup_mfa_database.php:52
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/setup_mfa_database.php on line 52
+[25-Aug-2025 03:57:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Auth::createUser() in /var/www/html/test_mfa_system.php:78
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(46): MFASystemTest->setupTestData()
+#1 /var/www/html/test_mfa_system.php(478): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(20): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 78
+[25-Aug-2025 04:02:44 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:02:44 UTC] PHP Warning:  Trying to access array offset on value of type null in /var/www/html/test_mfa_system.php on line 302
+[25-Aug-2025 04:02:45 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:402
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(55): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(491): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(20): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 402
+[25-Aug-2025 04:07:27 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:07:27 UTC] PHP Warning:  Trying to access array offset on value of type null in /var/www/html/test_mfa_system.php on line 302
+[25-Aug-2025 04:07:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:402
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(55): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(491): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 402
+[25-Aug-2025 04:10:19 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:10:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:424
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(55): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(513): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 424
+[25-Aug-2025 04:13:19 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:13:19 UTC] PHP Warning:  Trying to access array offset on value of type null in /var/www/html/test_mfa_system.php on line 324
+[25-Aug-2025 04:13:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:424
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(55): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(513): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 424
+[25-Aug-2025 04:15:50 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:15:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:425
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(56): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 425
+[25-Aug-2025 04:18:21 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:18:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:425
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(56): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 425
+[25-Aug-2025 04:23:00 UTC] PHP Fatal error:  Uncaught Error: Class "LoginTracker" not found in /var/www/html/test_logintracker.php:18
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/test_logintracker.php on line 18
+[25-Aug-2025 04:23:25 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:23:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:425
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(56): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 425
+[25-Aug-2025 04:28:19 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:28:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:425
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(56): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 425
+[25-Aug-2025 04:30:58 UTC] PHP Warning:  Array to string conversion in /var/www/html/includes/Database.php on line 125
+[25-Aug-2025 04:30:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::cleanupExpiredTrustedDevices() in /var/www/html/test_mfa_system.php:425
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(56): MFASystemTest->testCleanup()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 425
+[25-Aug-2025 04:44:36 UTC] PHP Warning:  require_once(/var/www/html/includes/LoginTracker_fixed.php): Failed to open stream: No such file or directory in /var/www/html/test_fixed_method.php on line 17
+[25-Aug-2025 04:44:36 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/includes/LoginTracker_fixed.php' (include_path='.:/usr/local/lib/php') in /var/www/html/test_fixed_method.php:17
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/test_fixed_method.php on line 17
+[25-Aug-2025 04:44:40 UTC] PHP Warning:  require_once(/var/www/html/includes/LoginTracker_fixed.php): Failed to open stream: No such file or directory in /var/www/html/test_fixed_method.php on line 17
+[25-Aug-2025 04:44:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/includes/LoginTracker_fixed.php' (include_path='.:/usr/local/lib/php') in /var/www/html/test_fixed_method.php:17
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/test_fixed_method.php on line 17
+[25-Aug-2025 04:56:09 UTC] PHP Warning:  require_once(/var/www/html/includes/config/config.php): Failed to open stream: No such file or directory in /var/www/html/includes/LoginTracker.php on line 13
+[25-Aug-2025 04:56:09 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/includes/config/config.php' (include_path='.:/usr/local/lib/php') in /var/www/html/includes/LoginTracker.php:13
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(17): require_once()
+#1 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#2 {main}
+  thrown in /var/www/html/includes/LoginTracker.php on line 13
+[25-Aug-2025 05:01:03 UTC] PHP Fatal error:  Uncaught Error: Class "LoginTracker" not found in /var/www/html/test_mfa_system.php:30
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(513): MFASystemTest->__construct()
+#1 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#2 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 30
+[25-Aug-2025 05:04:52 UTC] PHP Fatal error:  Uncaught Error: Class "LoginTracker" not found in /var/www/html/test_mfa_system.php:30
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(513): MFASystemTest->__construct()
+#1 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#2 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 30
+[25-Aug-2025 05:06:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::generateDeviceFingerprint() in /var/www/html/test_mfa_system.php:124
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(47): MFASystemTest->setupTestData()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 124
+[25-Aug-2025 05:07:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::generateDeviceFingerprint() in /var/www/html/test_mfa_system.php:124
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(47): MFASystemTest->setupTestData()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 124
+[25-Aug-2025 05:11:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::getLocationData() in /var/www/html/test_mfa_system.php:183
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(49): MFASystemTest->testDeviceFingerprinting()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 183
+[25-Aug-2025 05:12:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::getLocationData() in /var/www/html/test_mfa_system.php:183
+Stack trace:
+#0 /var/www/html/test_mfa_system.php(49): MFASystemTest->testDeviceFingerprinting()
+#1 /var/www/html/test_mfa_system.php(514): MFASystemTest->runAllTests()
+#2 /var/www/html/run_mfa_tests.php(23): include('/var/www/html/t...')
+#3 {main}
+  thrown in /var/www/html/test_mfa_system.php on line 183
+[28-Aug-2025 02:15:25 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:15:48 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:16:16 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:16:28 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:16:31 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:16:37 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:19:50 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(729): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:32:57 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(744): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:34:03 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(744): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:38:51 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(744): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:39:05 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(744): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:39:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Auth::createUser() in /var/www/html/test_real_user_interactions.php:90
+Stack trace:
+#0 /var/www/html/test_real_user_interactions.php(33): createTestUsers()
+#1 {main}
+  thrown in /var/www/html/test_real_user_interactions.php on line 90
+[28-Aug-2025 02:39:18 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(744): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:41:27 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:42:29 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:42:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Auth::createUser() in /var/www/html/test_real_user_interactions.php:91
+Stack trace:
+#0 /var/www/html/test_real_user_interactions.php(33): createTestUsers()
+#1 {main}
+  thrown in /var/www/html/test_real_user_interactions.php on line 91
+[28-Aug-2025 02:43:54 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:43:55 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:43:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Auth::createUser() in /var/www/html/test_real_user_interactions.php:91
+Stack trace:
+#0 /var/www/html/test_real_user_interactions.php(33): createTestUsers()
+#1 {main}
+  thrown in /var/www/html/test_real_user_interactions.php on line 91
+[28-Aug-2025 02:43:59 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:44:06 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:44:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Auth::createUser() in /var/www/html/test_real_user_interactions.php:91
+Stack trace:
+#0 /var/www/html/test_real_user_interactions.php(33): createTestUsers()
+#1 {main}
+  thrown in /var/www/html/test_real_user_interactions.php on line 91
+[28-Aug-2025 02:46:53 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:46:58 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:47:04 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:47:13 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:47:13 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:47:19 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(747): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:49:44 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(750): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:49:48 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(750): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:50:48 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:50:51 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:50:59 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:51:05 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:51:56 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:52:03 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:52:06 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:52:10 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:52:12 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(749): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:59:41 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:59:44 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 02:59:47 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:00:12 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:00:15 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:00:17 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:00:21 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:27 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:29 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:31 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:36 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:38 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:57 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:02:58 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:03:04 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:08:38 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(759): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:08:42 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(759): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:09:01 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(759): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:09:06 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(759): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:11:10 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(761): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:11:13 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(761): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:11:19 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(761): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:11:22 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(761): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:12:38 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(763): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:12:42 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(763): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:13:44 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(760): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:13:49 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(760): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:15:00 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:15:05 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:15:43 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:15:45 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:15:52 UTC] PHP Fatal error:  Uncaught Exception: Query failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role' in 'field list' in /var/www/html/includes/Database.php:47
+Stack trace:
+#0 /var/www/html/includes/Database.php(52): Database->query('SELECT id, role...', Array)
+#1 /var/www/html/test_real_user_interactions.php(758): Database->fetch('SELECT id, role...', Array)
+#2 {main}
+  thrown in /var/www/html/includes/Database.php on line 47
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:10 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:31 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:21:32 UTC] PHP Warning:  Undefined array key 0 in /var/www/html/debug_table_exists.php on line 16
+[28-Aug-2025 03:25:35 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:29:07 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:29:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:30:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:31:54 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:43:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:43:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 03:43:53 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/login/index.php on line 37
+[28-Aug-2025 04:04:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:04:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:04:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:04:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:04:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:04:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:04:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:04:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:14:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:14:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:14:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:14:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:14:48 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:14:48 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:14:48 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:14:48 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:24:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:24:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:24:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:24:16 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:28:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_direct.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:28:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_direct.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:28:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_direct.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:28:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_direct.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:30:34 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:31:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 04:31:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 04:31:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 04:31:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_proper.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 04:59:56 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:00:24 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:00:58 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:01:03 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:01:07 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:01:56 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:07:48 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:08:05 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:09:29 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:09:45 UTC] PHP Warning:  Trying to access array offset on value of type bool in /var/www/html/login/index.php on line 22
+[28-Aug-2025 05:11:54 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:11:54 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:11:54 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:11:54 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:11:55 UTC] PHP Fatal error:  Uncaught Error: Non-static method Session::start() cannot be called statically in /var/www/html/api/login.php:183
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/api/login.php on line 183
+[28-Aug-2025 05:13:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:13:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:13:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:13:19 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:13:19 UTC] PHP Fatal error:  Uncaught Error: Non-static method Session::start() cannot be called statically in /var/www/html/api/login.php:183
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/api/login.php on line 183
+[28-Aug-2025 05:14:40 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:14:40 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:14:40 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:14:40 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:14:40 UTC] PHP Fatal error:  Uncaught Error: Non-static method Session::start() cannot be called statically in /var/www/html/api/login.php:183
+Stack trace:
+#0 /var/www/html/test_api_simple.php(22): include()
+#1 {main}
+  thrown in /var/www/html/api/login.php on line 183
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 28
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 29
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 30
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 31
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 34
+[28-Aug-2025 05:15:39 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/html/includes/Session.php on line 36
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_api_simple.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 28
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 29
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 30
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 31
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 34
+[28-Aug-2025 05:16:44 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/html/includes/Session.php on line 36
+[28-Aug-2025 05:18:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:18:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:18:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:18:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_frontend_login.php:3) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_frontend_login.php:3) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_frontend_login.php:3) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/test_frontend_login.php:3) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 28
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 29
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 30
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 31
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  session_name(): Session name cannot be changed after headers have already been sent in /var/www/html/includes/Session.php on line 34
+[28-Aug-2025 05:28:57 UTC] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /var/www/html/includes/Session.php on line 36
+[28-Aug-2025 05:32:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:32:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:32:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:32:00 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:35:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:35:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:35:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:35:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:35:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::getUserLoginPreferences() in /var/www/html/api/login.php:135
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/api/login.php on line 135
+[28-Aug-2025 05:36:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:36:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:36:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:36:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:36:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method LoginTracker::getUserLoginPreferences() in /var/www/html/api/login.php:135
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/api/login.php on line 135
+[28-Aug-2025 05:38:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:38:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:38:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:38:20 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:38:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:38:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:38:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:38:33 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15
+[28-Aug-2025 05:38:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 12
+[28-Aug-2025 05:38:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 13
+[28-Aug-2025 05:38:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 14
+[28-Aug-2025 05:38:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/includes/LoginTracker.php:1) in /var/www/html/api/login.php on line 15

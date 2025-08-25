@@ -149,8 +149,8 @@ class Database {
 
     public function tableExists($tableName) {
         try {
-            $result = $this->query("SHOW TABLES LIKE ?", [$tableName]);
-            return $result->fetch() !== false;
+            $result = $this->query("SHOW TABLES LIKE :table_name", ['table_name' => $tableName]);
+            return $result->rowCount() > 0;
         } catch (Exception $e) {
             return false;
         }

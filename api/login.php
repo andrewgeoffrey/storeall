@@ -86,8 +86,13 @@ try {
     // Initialize database connection
     $db = Database::getInstance();
     
-    // Get user by email
-    $user = $db->fetch("SELECT * FROM users WHERE email = ?", [$email]);
+    // Get user by email with role
+    $user = $db->fetch("
+        SELECT u.*, ur.role 
+        FROM users u 
+        LEFT JOIN user_roles ur ON u.id = ur.user_id 
+        WHERE u.email = ?
+    ", [$email]);
     
     if (!$user) {
         // Record failed attempt
@@ -180,13 +185,15 @@ try {
     }
     
     // Login successful - create session
-    $sessionId = Session::start();
-    Session::set('user_id', $user['id']);
-    Session::set('email', $user['email']);
-    Session::set('first_name', $user['first_name']);
-    Session::set('last_name', $user['last_name']);
-    Session::set('role', $user['role'] ?? 'customer');
-    Session::set('device_fingerprint', $deviceFingerprint);
+    $session = Session::getInstance();
+    $session->start();
+    $session->set('user_id', $user['id']);
+    $session->set('email', $user['email']);
+    $session->set('first_name', $user['first_name']);
+    $session->set('last_name', $user['last_name']);
+    $session->set('role', $user['role'] ?? 'customer');
+    $session->set('device_fingerprint', $deviceFingerprint);
+    $sessionId = session_id();
     
     // Clear failed attempts
     $loginTracker->clearFailedAttempts($email, $ipAddress, $deviceFingerprint);

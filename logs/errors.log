@@ -28,3 +28,6 @@
 [2025-08-14 01:49:48] EXCEPTION: Call to undefined method Database::prepare() in /var/www/html/includes/Logger.php on line 120
 [2025-08-14 01:51:06] EXCEPTION: Call to undefined method Database::prepare() in /var/www/html/includes/Logger.php on line 120
 [2025-08-14 01:53:14] EXCEPTION: Call to undefined method Database::prepare() in /var/www/html/includes/Logger.php on line 120
+[2025-08-28 02:26:46] EXCEPTION: Database connection failed: could not find driver in C:\Users\Jeff\PhpstormProjects\storeall\includes\Database.php on line 22
+[2025-08-28 02:27:09] EXCEPTION: Database connection failed: could not find driver in C:\Users\Jeff\PhpstormProjects\storeall\includes\Database.php on line 22
+[2025-08-28 02:27:18] EXCEPTION: Database connection failed: could not find driver in C:\Users\Jeff\PhpstormProjects\storeall\includes\Database.php on line 22
