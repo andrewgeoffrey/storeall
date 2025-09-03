@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Handle directory requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+)/?$ $1/index.php [NC,L]
+
+# Handle clean URLs - remove .php extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Ensure index.php is the default file
+DirectoryIndex index.php

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class LoginTracker {
     private $db;
     private $logger;
@@ -140,6 +140,48 @@ class LoginTracker {
         }
     }
 
+    public function isTrustedDevice($userId, $deviceFingerprint) {
+        try {
+            $sql = "SELECT * FROM trusted_devices WHERE user_id = ? AND device_fingerprint = ? AND mfa_suppressed_until > NOW() AND is_active = 1";
+            $result = $this->db->fetch($sql, [$userId, $deviceFingerprint]);
+            return $result !== false;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function addTrustedDevice($userId, $deviceFingerprint, $deviceName, $userAgent, $ipAddress, $locationData = null, $trustDays = 30) {
+        try {
+            $trustedUntil = date('Y-m-d H:i:s', strtotime("+{$trustDays} days"));
+            
+            $data = [
+                'user_id' => $userId,
+                'device_fingerprint' => $deviceFingerprint,
+                'device_name' => $deviceName,
+                'ip_address' => $ipAddress,
+                'user_agent' => $userAgent,
+                'location_data' => $locationData ? json_encode($locationData) : null,
+                'mfa_suppressed_until' => $trustedUntil,
+                'is_active' => 1,
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+
+            $trustedDeviceId = $this->db->insert('trusted_devices', $data);
+            return $trustedDeviceId;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function getLoginHistory($userId, $limit = 10) {
+        try {
+            $sql = "SELECT * FROM login_attempts WHERE user_id = ? AND success = 1 ORDER BY updated_at DESC LIMIT ?";
+            return $this->db->fetchAll($sql, [$userId, $limit]);
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
     public function detectSuspiciousActivity($userId, $ipAddress, $locationData) {
         try {
             $recentLogins = $this->getLoginHistory($userId, 5);
@@ -168,35 +210,50 @@ class LoginTracker {
         }
     }
 
-    public function getLoginHistory($userId, $limit = 10) {
+    public function removeTrustedDevice($userId, $deviceFingerprint) {
         try {
-            $sql = "SELECT * FROM login_attempts WHERE user_id = ? AND success = 1 ORDER BY updated_at DESC LIMIT ?";
-            return $this->db->fetchAll($sql, [$userId, $limit]);
+            $sql = "DELETE FROM trusted_devices WHERE user_id = ? AND device_fingerprint = ?";
+            $stmt = $this->db->query($sql, [$userId, $deviceFingerprint]);
+            return $stmt->rowCount();
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    public function getTrustedDevices($userId) {
+        try {
+            $sql = "SELECT * FROM trusted_devices WHERE user_id = ? AND mfa_suppressed_until > NOW() AND is_active = 1 ORDER BY created_at DESC";
+            return $this->db->fetchAll($sql, [$userId]);
         } catch (Exception $e) {
             return [];
         }
     }
 
-    public function addTrustedDevice($userId, $deviceFingerprint, $deviceName, $userAgent, $ipAddress, $locationData = null, $trustDays = 30) {
+    public function updateUserLoginPreferences($userId, $preferences) {
         try {
-            $trustedUntil = date('Y-m-d H:i:s', strtotime("+{$trustDays} days"));
-            
             $data = [
-                'user_id' => $userId,
-                'device_fingerprint' => $deviceFingerprint,
-                'device_name' => $deviceName,
-                'ip_address' => $ipAddress,
-                'user_agent' => $userAgent,
-                'location_data' => $locationData ? json_encode($locationData) : null,
-                'mfa_suppressed_until' => $trustedUntil,
-                'is_active' => 1,
-                'created_at' => date('Y-m-d H:i:s')
+                'mfa_enabled' => $preferences['mfa_enabled'] ?? 1,
+                'mfa_method' => $preferences['mfa_method'] ?? 'email',
+                'trust_device_days' => $preferences['trust_device_days'] ?? 30,
+                'notify_on_suspicious_login' => $preferences['notify_on_suspicious_login'] ?? 1,
+                'notify_on_new_device' => $preferences['notify_on_new_device'] ?? 1,
+                'updated_at' => date('Y-m-d H:i:s')
             ];
 
-            $trustedDeviceId = $this->db->insert('trusted_devices', $data);
-            return $trustedDeviceId;
+            $this->db->update('user_login_preferences', $data, 'user_id = ?', [$userId]);
+            return true;
         } catch (Exception $e) {
             return false;
+        }
+    }
+
+    public function cleanupExpiredTrustedDevices() {
+        try {
+            $sql = "UPDATE trusted_devices SET is_active = 0 WHERE mfa_suppressed_until < NOW()";
+            $stmt = $this->db->query($sql);
+            return $stmt->rowCount();
+        } catch (Exception $e) {
+            return 0;
         }
     }
 
@@ -237,15 +294,5 @@ class LoginTracker {
 
     public function isDeviceTrusted($userId, $deviceFingerprint) {
         return $this->isTrustedDevice($userId, $deviceFingerprint);
-    }
-
-    public function isTrustedDevice($userId, $deviceFingerprint) {
-        try {
-            $sql = "SELECT * FROM trusted_devices WHERE user_id = ? AND device_fingerprint = ? AND mfa_suppressed_until > NOW() AND is_active = 1";
-            $result = $this->db->fetch($sql, [$userId, $deviceFingerprint]);
-            return $result !== false;
-        } catch (Exception $e) {
-            return false;
-        }
     }
 }

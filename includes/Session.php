@@ -23,24 +23,41 @@ class Session {
      * Start session if not already started
      */
     public function start() {
-        if (!$this->started && session_status() === PHP_SESSION_NONE) {
-            // Configure session settings before starting
-            ini_set('session.cookie_httponly', 1);
-            ini_set('session.cookie_secure', 1);
-            ini_set('session.use_strict_mode', 1);
-            ini_set('session.cookie_samesite', 'Strict');
+        if (!$this->started) {
+            // Check if session is already active
+            if (session_status() === PHP_SESSION_ACTIVE) {
+                $this->started = true;
+                return $this;
+            }
             
-            // Set session name
-            session_name('STOREALL_SESSION');
-            
-            session_start();
-            $this->started = true;
-            
-            // Regenerate session ID periodically for security
-            if (!isset($_SESSION['last_regeneration'])) {
-                $_SESSION['last_regeneration'] = time();
-            } elseif (time() - $_SESSION['last_regeneration'] > 1800) { // 30 minutes
-                $this->regenerate();
+            // Only configure session if headers haven't been sent
+            if (headers_sent()) {
+                // Headers already sent, just start session with current settings
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $this->started = true;
+            } else {
+                // Configure session settings before starting
+                ini_set('session.cookie_httponly', 1);
+                ini_set('session.cookie_secure', 1);
+                ini_set('session.use_strict_mode', 1);
+                ini_set('session.cookie_samesite', 'Strict');
+                
+                // Set session name only if not already set
+                if (session_name() !== 'STOREALL_SESSION') {
+                    session_name('STOREALL_SESSION');
+                }
+                
+                session_start();
+                $this->started = true;
+                
+                // Regenerate session ID periodically for security
+                if (!isset($_SESSION['last_regeneration'])) {
+                    $_SESSION['last_regeneration'] = time();
+                } elseif (time() - $_SESSION['last_regeneration'] > 1800) { // 30 minutes
+                    $this->regenerate();
+                }
             }
         }
         return $this;

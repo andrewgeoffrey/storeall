@@ -56,8 +56,12 @@ try {
         ]);
         exit;
     }
+
+    // Check if this is an MFA verification request
+    $isMfaVerification = !empty($mfaCode) && empty($password);
     
-    if (empty($password)) {
+    // Only require password for initial login, not for MFA verification
+    if (!$isMfaVerification && empty($password)) {
         echo json_encode([
             'success' => false,
             'message' => 'Password is required'
@@ -105,18 +109,21 @@ try {
         ]);
         exit;
     }
-    
-    // Verify password
-    if (!password_verify($password, $user['password_hash'])) {
-        // Record failed attempt
-        $loginTracker->recordFailedAttempt($email, $ipAddress, $deviceFingerprint);
-        $loginTracker->updateLoginAttempt($attemptId, false, 'Invalid email or password', false, null, $user['id']);
-        
-        echo json_encode([
-            'success' => false,
-            'message' => 'Invalid email or password'
-        ]);
-        exit;
+
+    // Only verify password for initial login, not for MFA verification
+    if (!$isMfaVerification) {
+        // Verify password
+        if (!password_verify($password, $user['password_hash'])) {
+            // Record failed attempt
+            $loginTracker->recordFailedAttempt($email, $ipAddress, $deviceFingerprint);
+            $loginTracker->updateLoginAttempt($attemptId, false, 'Invalid email or password', false, null, $user['id']);
+            
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid email or password'
+            ]);
+            exit;
+        }
     }
     
     // Check if email is verified

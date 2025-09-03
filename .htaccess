@@ -1,13 +1,20 @@
 RewriteEngine On
 
-# Handle directory requests (like /login/) to their index.php
+# Handle admin dashboard routing specifically - this must come first
+RewriteRule ^admin/dashboard/?$ admin/dashboard/index.php [NC,L]
+
+# Handle admin area routing
+RewriteRule ^admin/?$ admin/index.php [NC,L]
+
+# Handle other nested directory requests to their index.php files
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^([^/]+)/?$ $1/index.php [NC,L]
+RewriteRule ^(.+)/?$ $1/index.php [NC,L]
 
-# Handle clean URLs - remove .php extension
+# Handle clean URLs - remove .php extension (only for files, not directories)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !\.php$
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 # Ensure index.php is the default file in each folder

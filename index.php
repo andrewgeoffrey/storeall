@@ -1100,7 +1100,9 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include monitoring JavaScript for client-side monitoring -->
+    <script src="/admin/dashboard/monitoring.js"></script>
+    
     <script>
         // Client-side error logging
         window.addEventListener('error', function(e) {
