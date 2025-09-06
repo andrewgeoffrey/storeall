@@ -1,0 +1,15 @@
+# Ignore these directories to improve Cursor performance
+node_modules/
+vendor/
+.git/
+docker/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Ignore large files that might cause stalling
+*.sql
+*.dump
+*.backup
+
